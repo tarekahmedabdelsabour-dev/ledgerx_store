@@ -28,7 +28,7 @@ Full restart, then Ctrl+Shift+R. Open the store at `http://mysite.localhost:8001
 - **Bank transfer or wallet**: the customer sees your instructions. When the money arrives press **Store > Record Payment** on the Sales Order.
 - **Paymob**: in Paymob's dashboard create a card integration and a frame. Put the API key, integration ID, frame ID and HMAC secret in Store Settings, choose the Mode of Payment that should receive the money, and give Paymob this *transaction processed callback* address:
   `https://<your-site>/api/method/ledgerx_store.api.paymob_callback`
-  and set the frame's redirect address to `https://<your-site>/my-orders`. The order is marked paid only when the signed callback arrives and the amount matches.
+  and set the redirect address after payment to `https://<your-site>/store`. The order is marked paid only when the signed callback arrives and the amount matches.
 - Online orders left unpaid for 24 hours are marked *Failed* so your team can call or cancel them.
 
 ## Make it the home page
