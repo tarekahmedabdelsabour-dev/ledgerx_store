@@ -1,0 +1,10 @@
+{% extends "ledgerx_store/templates/store_base.html" %}
+{% block page_content %}
+<div class="lx-wrap" style="padding-block:28px">
+  <h1 style="margin-block-end:16px">{{ _("My orders") }}</h1>
+  {% if orders %}
+  <table class="lx-table"><thead><tr><th>{{ _("Order") }}</th><th>{{ _("Date") }}</th><th>{{ _("Total") }}</th><th>{{ _("Status") }}</th></tr></thead><tbody>
+  {% for o in orders %}<tr><td><a href="/order?id={{ o.name }}&k={{ o.store_key }}">{{ o.name }}</a></td><td>{{ frappe.format_date(o.transaction_date) }}</td><td>{{ money(o.grand_total) }}</td><td>{{ _(o.status) }}{% if o.store_payment_status %} · {{ _(o.store_payment_status) }}{% endif %}</td></tr>{% endfor %}</tbody></table>
+  {% else %}<div class="lx-empty"><p>{{ _("You have no online orders yet.") }}</p><a class="lx-btn" href="/shop">{{ _("Start shopping") }}</a></div>{% endif %}
+</div>
+{% endblock %}

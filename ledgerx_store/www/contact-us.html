@@ -1,0 +1,24 @@
+{% extends "ledgerx_store/templates/store_base.html" %}
+{% block page_content %}
+<div class="lx-wrap lx-contact">
+  <form data-inquiry="Contact" class="lx-panel" novalidate>
+    <h1 style="font-size:1.6rem;margin-block-end:12px">{{ _("Contact us") }}</h1>
+    <div class="lx-row">
+      <label class="lx-field"><span>{{ _("Full name") }}</span><input name="full_name" required autocomplete="name"></label>
+      <label class="lx-field"><span>{{ _("Phone") }}</span><input name="phone" type="tel" autocomplete="tel" inputmode="tel"></label>
+    </div>
+    <label class="lx-field"><span>{{ _("Email") }}</span><input name="email" type="email" autocomplete="email"></label>
+    <label class="lx-field"><span>{{ _("Message") }}</span><textarea name="message" required></textarea></label>
+    <p class="lx-alert" data-err hidden role="alert"></p><p class="lx-alert ok" data-ok hidden role="status">{{ _("Sent. We will contact you soon.") }}</p>
+    <button class="lx-btn" type="submit">{{ _("Send message") }}</button>
+  </form>
+  <aside>
+    <h2 style="margin-block-end:12px">{{ _("Reach us") }}</h2>
+    {% if store.phone %}<p><b>{{ _("Phone") }}</b><br><a href="tel:{{ store.phone }}" dir="ltr">{{ store.phone }}</a></p>{% endif %}
+    {% if whatsapp_link %}<p><a class="lx-btn ghost" href="{{ whatsapp_link }}" target="_blank" rel="noopener">{{ _("WhatsApp") }}</a></p>{% endif %}
+    {% if store.email %}<p><b>{{ _("Email") }}</b><br><a href="mailto:{{ store.email }}">{{ store.email }}</a></p>{% endif %}
+    {% if store.address %}<p><b>{{ _("Address") }}</b><br>{{ store.address }}</p>{% endif %}
+    {% if store.working_hours %}<p><b>{{ _("Working hours") }}</b><br>{{ store.working_hours }}</p>{% endif %}
+  </aside>
+</div>
+{% endblock %}

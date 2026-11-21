@@ -1,0 +1,8 @@
+{% extends "ledgerx_store/templates/store_base.html" %}
+{% block page_content %}
+<article class="lx-article">
+  <h1>{{ page_doc.title }}</h1>
+  {% if page_doc.image %}<p><img src="{{ page_doc.image }}" alt=""></p>{% endif %}
+  <div class="body">{{ page_doc.body | safe }}</div>
+</article>
+{% endblock %}

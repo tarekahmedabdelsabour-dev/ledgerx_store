@@ -1,0 +1,32 @@
+{% extends "ledgerx_store/templates/store_base.html" %}
+{% block page_content %}
+<div class="lx-wrap">
+<div class="lx-prod">
+  <div class="pic">{% if car.image %}<img src="{{ car.image }}" alt="{{ car.make }} {{ car.model }}">{% endif %}</div>
+  <div>
+    <h1>{{ car.make }} {{ car.model }} {{ car.year or "" }}</h1>
+    <div class="lx-big-price">{{ money(car.asking_price) if car.asking_price else _("Ask for the price") }}</div>
+    <dl class="lx-facts">
+      <dt>{{ _("Condition") }}</dt><dd>{{ car.condition }}</dd>
+      {% if car.mileage %}<dt>{{ _("Mileage") }}</dt><dd>{{ "{:,}".format(car.mileage) }} {{ _("km") }}</dd>{% endif %}
+      {% if car.color %}<dt>{{ _("Color") }}</dt><dd>{{ car.color }}</dd>{% endif %}
+      {% if car.fuel %}<dt>{{ _("Fuel") }}</dt><dd>{{ car.fuel }}</dd>{% endif %}
+      {% if car.transmission %}<dt>{{ _("Transmission") }}</dt><dd>{{ car.transmission }}</dd>{% endif %}
+      {% if car.engine_cc %}<dt>{{ _("Engine") }}</dt><dd>{{ car.engine_cc }} cc</dd>{% endif %}
+    </dl>
+    <form class="lx-panel" data-inquiry="Test Drive" data-ref-doctype="Car" data-ref-name="{{ car.name }}" novalidate>
+      <h2 style="margin-block-end:10px">{{ _("Book a test drive") }}</h2>
+      <div class="lx-row">
+        <label class="lx-field"><span>{{ _("Full name") }}</span><input name="full_name" required autocomplete="name"></label>
+        <label class="lx-field"><span>{{ _("Phone") }}</span><input name="phone" required type="tel" inputmode="tel" autocomplete="tel"></label>
+      </div>
+      <label class="lx-field"><span>{{ _("Preferred day") }}</span><input name="date_from" type="date"></label>
+      <label class="lx-field"><span>{{ _("Notes (optional)") }}</span><textarea name="message"></textarea></label>
+      <p class="lx-alert" data-err hidden role="alert"></p><p class="lx-alert ok" data-ok hidden role="status">{{ _("Sent. We will contact you soon.") }}</p>
+      <button class="lx-btn accent" type="submit">{{ _("Send request") }}</button>
+    </form>
+  </div>
+</div>
+{% if car.notes %}<div class="lx-detail">{{ car.notes }}</div>{% endif %}
+</div>
+{% endblock %}

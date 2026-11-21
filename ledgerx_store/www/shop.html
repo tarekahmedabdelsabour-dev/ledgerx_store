@@ -1,0 +1,31 @@
+{% extends "ledgerx_store/templates/store_base.html" %}
+{% from "ledgerx_store/templates/includes/card.html" import card with context %}
+{% block page_content %}
+<div class="lx-wrap lx-shop">
+  <aside class="lx-side" aria-label="{{ _('Categories') }}">
+    <h3>{{ _("Categories") }}</h3>
+    <a href="/shop{{ '?q=' ~ q if q else '' }}" class="{{ 'on' if not cat }}">{{ _("All products") }}</a>
+    {% for c in cats %}<a href="/shop?cat={{ c.store_slug }}{{ '&q=' ~ q if q else '' }}" class="{{ 'on' if cat == c.store_slug }}">{{ c.name }}</a>{% endfor %}
+  </aside>
+  <section>
+    <div class="lx-bar">
+      <h1 style="font-size:1.5rem">{{ cat_title or (_("Search results") if q else _("All products")) }} <small class="lx-muted" style="font-size:1rem;font-weight:400">({{ total }})</small></h1>
+      <form method="get" action="/shop">
+        {% if q %}<input type="hidden" name="q" value="{{ q }}">{% endif %}{% if cat %}<input type="hidden" name="cat" value="{{ cat }}">{% endif %}
+        <select class="lx-select" name="sort" onchange="this.form.submit()" aria-label="{{ _('Sort') }}">
+          <option value="new" {{ 'selected' if sort == 'new' }}>{{ _("Newest") }}</option>
+          <option value="name" {{ 'selected' if sort == 'name' }}>{{ _("Name") }}</option>
+          <option value="price_asc" {{ 'selected' if sort == 'price_asc' }}>{{ _("Price: low to high") }}</option>
+          <option value="price_desc" {{ 'selected' if sort == 'price_desc' }}>{{ _("Price: high to low") }}</option>
+        </select>
+      </form>
+    </div>
+    {% if items %}
+      <div class="lx-grid">{% for it in items %}{{ card(it) }}{% endfor %}</div>
+      {% if pages > 1 %}<nav class="lx-pager" aria-label="{{ _('Pages') }}">{% for n in range(1, pages + 1) %}{% if n == page %}<span class="on" aria-current="page">{{ n }}</span>{% else %}<a href="/shop?{{ base_query }}{{ '&' if base_query }}page={{ n }}">{{ n }}</a>{% endif %}{% endfor %}</nav>{% endif %}
+    {% else %}
+      <div class="lx-empty"><p>{{ _("No products match your search.") }}</p><a class="lx-btn" href="/shop">{{ _("Show all products") }}</a></div>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "ledgerx_store/templates/store_base.html" %}
+{% block page_content %}
+<div class="lx-wrap" style="padding-block:28px">
+  <h1 style="margin-block-end:6px">{{ _("Rooms") }}</h1>
+  <p class="lx-muted">{{ _("Send a request and we confirm availability and the final price.") }}</p>
+  {% for r in rooms %}
+  <section class="lx-panel" id="{{ r.name }}" style="margin-block:16px">
+    <div class="lx-contact" style="padding:0">
+      <div>
+        <h2>{{ r.room_type_name }}</h2><p class="lx-muted">{{ r.hotel }}</p>
+        <p>{{ r.description or "" }}</p>
+        <dl class="lx-facts"><dt>{{ _("Adults") }}</dt><dd>{{ r.max_adults or "-" }}</dd><dt>{{ _("Children") }}</dt><dd>{{ r.max_children or 0 }}</dd>{% if r.beds %}<dt>{{ _("Beds") }}</dt><dd>{{ r.beds }}</dd>{% endif %}</dl>
+        <div class="lx-big-price">{% if r.from_rate %}{{ _("From") }} {{ money(r.from_rate) }} <small class="lx-muted" style="font-size:1rem">/ {{ _("night") }}</small>{% else %}{{ _("Ask for the price") }}{% endif %}</div>
+      </div>
+      <form data-inquiry="Hotel Booking" data-ref-doctype="Room Type" data-ref-name="{{ r.name }}" novalidate>
+        <div class="lx-row">
+          <label class="lx-field"><span>{{ _("Full name") }}</span><input name="full_name" required></label>
+          <label class="lx-field"><span>{{ _("Phone") }}</span><input name="phone" required type="tel" inputmode="tel"></label>
+          <label class="lx-field"><span>{{ _("Check in") }}</span><input name="date_from" type="date" required></label>
+          <label class="lx-field"><span>{{ _("Check out") }}</span><input name="date_to" type="date" required></label>
+        </div>
+        <label class="lx-field"><span>{{ _("Guests") }}</span><input name="guests" type="number" min="1" value="2"></label>
+        <p class="lx-alert" data-err hidden role="alert"></p><p class="lx-alert ok" data-ok hidden role="status">{{ _("Sent. We will contact you soon.") }}</p>
+        <button class="lx-btn accent" type="submit">{{ _("Send request") }}</button>
+      </form>
+    </div>
+  </section>
+  {% endfor %}
+</div>
+{% endblock %}

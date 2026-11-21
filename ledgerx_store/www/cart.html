@@ -1,0 +1,10 @@
+{% extends "ledgerx_store/templates/store_base.html" %}
+{% block page_content %}
+<div class="lx-wrap">
+  <h1 style="margin-block:24px 0">{{ _("Cart") }}</h1>
+  <div class="lx-cartbox">
+    <div id="lx-cart-lines" aria-live="polite"></div>
+    <aside class="lx-panel" id="lx-cart-sum" aria-live="polite"></aside>
+  </div>
+</div>
+{% endblock %}

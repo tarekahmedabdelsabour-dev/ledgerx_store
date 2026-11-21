@@ -1,0 +1,76 @@
+{% extends "templates/web.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block head_include %}
+<meta name="description" content="{{ description | striptags | truncate(180) }}">
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ description | striptags | truncate(180) }}">
+{% if image %}<meta property="og:image" content="{{ image }}">{% endif %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/ledgerx_store/css/store.css?v=1.0.0">
+<style>:root{--primary:{{ store.primary_color or '#0B2A5B' }};--accent:{{ store.accent_color or '#E8A317' }}}</style>
+{% endblock %}
+
+{% block navbar %}
+<header class="lx-head">
+  <div class="lx-wrap lx-head-row">
+    <a class="lx-brand" href="/store">
+      {% if store.logo %}<img src="{{ store.logo }}" alt="" height="36">{% endif %}
+      <span>{{ store.store_name }}</span>
+    </a>
+    <form class="lx-search" action="/shop" method="get" role="search">
+      <input type="search" name="q" value="{{ q or '' }}" placeholder="{{ _('Search products') }}" aria-label="{{ _('Search products') }}">
+    </form>
+    <nav class="lx-nav" aria-label="{{ _('Main') }}">
+      <input type="checkbox" id="lx-nav-toggle" class="lx-nav-toggle">
+      <label for="lx-nav-toggle" class="lx-burger" aria-label="{{ _('Menu') }}"><span></span></label>
+      <div class="lx-nav-links">
+        <a href="/shop">{{ _("Shop") }}</a>
+        {% if has_cars %}<a href="/cars">{{ _("Cars") }}</a>{% endif %}
+        {% if has_rooms %}<a href="/stay">{{ _("Rooms") }}</a>{% endif %}
+        {% if has_news %}<a href="/news">{{ _("News") }}</a>{% endif %}
+        {% for p in menu_pages %}<a href="/p/{{ p.slug }}">{{ p.title }}</a>{% endfor %}
+        {% for l in store.menu or [] %}<a href="{{ l.url }}">{{ l.label }}</a>{% endfor %}
+        <a href="/contact-us">{{ _("Contact us") }}</a>
+        <a href="{{ '/my-orders' if frappe.session.user != 'Guest' else '/login?redirect-to=/my-orders' }}">{{ _("My orders") if frappe.session.user != 'Guest' else _("Sign in") }}</a>
+      </div>
+    </nav>
+    <a class="lx-cart" href="/cart" aria-label="{{ _('Cart') }}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11h10.2L20 7H6.2"/><circle cx="9" cy="19" r="1.3"/><circle cx="17" cy="19" r="1.3"/></svg><b class="lx-cart-count" data-cart-count hidden>0</b></a>
+  </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<main class="lx-main" id="lx-main" data-currency="{{ currency }}" data-lang="{{ frappe.lang }}">
+{% block page_content %}{% endblock %}
+</main>
+{% endblock %}
+
+{% block footer %}
+<footer class="lx-foot">
+  <div class="lx-wrap lx-foot-grid">
+    <div>
+      <strong class="lx-foot-name">{{ store.store_name }}</strong>
+      {% if store.footer_text %}<p>{{ store.footer_text }}</p>{% endif %}
+    </div>
+    <div>
+      {% if store.phone %}<p><a href="tel:{{ store.phone }}" dir="ltr">{{ store.phone }}</a></p>{% endif %}
+      {% if whatsapp_link %}<p><a href="{{ whatsapp_link }}" rel="noopener" target="_blank">{{ _("WhatsApp") }}</a></p>{% endif %}
+      {% if store.email %}<p><a href="mailto:{{ store.email }}">{{ store.email }}</a></p>{% endif %}
+      {% if store.address %}<p>{{ store.address }}</p>{% endif %}
+      {% if store.working_hours %}<p>{{ store.working_hours }}</p>{% endif %}
+    </div>
+    <div>
+      <p><a href="/shop">{{ _("Shop") }}</a></p>
+      <p><a href="/cart">{{ _("Cart") }}</a></p>
+      <p><a href="/contact-us">{{ _("Contact us") }}</a></p>
+      {% for p in menu_pages %}<p><a href="/p/{{ p.slug }}">{{ p.title }}</a></p>{% endfor %}
+    </div>
+  </div>
+</footer>
+<script>window.LX_I18N={"Added to the cart":{{ _("Added to the cart") | tojson }},"Your cart is empty":{{ _("Your cart is empty") | tojson }},"Remove":{{ _("Remove") | tojson }},"Total":{{ _("Total") | tojson }},"Subtotal":{{ _("Subtotal") | tojson }},"Tax":{{ _("Tax") | tojson }},"Shipping":{{ _("Shipping") | tojson }},"Free":{{ _("Free") | tojson }},"Checkout":{{ _("Checkout") | tojson }},"Placing your order":{{ _("Placing your order") | tojson }},"Sent. We will contact you soon.":{{ _("Sent. We will contact you soon.") | tojson }},"Something went wrong. Try again.":{{ _("Something went wrong. Try again.") | tojson }},"Only {0} left":{{ _("Only {0} left") | tojson }},"No longer available":{{ _("No longer available") | tojson }},"The quantity was reduced to {0}":{{ _("The quantity was reduced to {0}") | tojson }},"Minimum order is {0}":{{ _("Minimum order is {0}") | tojson }},"Continue shopping":{{ _("Continue shopping") | tojson }},"Place order":{{ _("Place order") | tojson }},"Pay now":{{ _("Pay now") | tojson }},"Out of stock":{{ _("Out of stock") | tojson }}};</script>
+<script src="/assets/ledgerx_store/js/store.js?v=1.0.0"></script>
+{% endblock %}

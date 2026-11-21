@@ -1,0 +1,267 @@
+{
+ "charts": [
+  {
+   "chart_name": "Requests by Kind",
+   "label": "Requests by Kind"
+  },
+  {
+   "chart_name": "Online Orders by Payment",
+   "label": "Online Orders by Payment"
+  }
+ ],
+ "content": "[{\"id\": \"dc0064095a\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Store</b></span>\", \"col\": 12}}, {\"id\": \"9a58912eeb\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Store Settings\", \"col\": 3}}, {\"id\": \"aea3299ede\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Store Inquiry\", \"col\": 3}}, {\"id\": \"5e1f8ba9f3\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Store Page\", \"col\": 3}}, {\"id\": \"6685a2467b\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Sales Order\", \"col\": 3}}, {\"id\": \"52ac78d254\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Online Orders to Deliver\", \"col\": 3}}, {\"id\": \"a3461bc649\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Online Orders Unpaid\", \"col\": 3}}, {\"id\": \"cc8ea633c3\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Online Payments Failed\", \"col\": 3}}, {\"id\": \"5e21d1b382\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"New Requests\", \"col\": 3}}, {\"id\": \"42531132d2\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Products in the Store\", \"col\": 3}}, {\"id\": \"9253b1df46\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Requests by Kind\", \"col\": 6}}, {\"id\": \"04fde80c7c\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Online Orders by Payment\", \"col\": 6}}, {\"id\": \"6318740d9c\", \"type\": \"card\", \"data\": {\"card_name\": \"Orders\", \"col\": 4}}, {\"id\": \"35419bb95e\", \"type\": \"card\", \"data\": {\"card_name\": \"Requests\", \"col\": 4}}, {\"id\": \"15c77d0821\", \"type\": \"card\", \"data\": {\"card_name\": \"Catalog\", \"col\": 4}}, {\"id\": \"f85524cd86\", \"type\": \"card\", \"data\": {\"card_name\": \"Website\", \"col\": 4}}, {\"id\": \"2601336f63\", \"type\": \"card\", \"data\": {\"card_name\": \"Setup\", \"col\": 4}}]",
+ "creation": "2026-11-22 09:00:00.000000",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 1,
+ "icon": "shopping-bag",
+ "idx": 1,
+ "is_hidden": 0,
+ "label": "Store",
+ "links": [
+  {
+   "type": "Card Break",
+   "label": "Orders",
+   "hidden": 0,
+   "is_query_report": 0,
+   "link_count": 4,
+   "onboard": 0
+  },
+  {
+   "type": "Link",
+   "label": "Sales Order",
+   "link_type": "DocType",
+   "link_to": "Sales Order",
+   "hidden": 0,
+   "is_query_report": 0,
+   "onboard": 0,
+   "dependencies": "",
+   "only_for": ""
+  },
+  {
+   "type": "Link",
+   "label": "Delivery Note",
+   "link_type": "DocType",
+   "link_to": "Delivery Note",
+   "hidden": 0,
+   "is_query_report": 0,
+   "onboard": 0,
+   "dependencies": "",
+   "only_for": ""
+  },
+  {
+   "type": "Link",
+   "label": "Payment Entry",
+   "link_type": "DocType",
+   "link_to": "Payment Entry",
+   "hidden": 0,
+   "is_query_report": 0,
+   "onboard": 0,
+   "dependencies": "",
+   "only_for": ""
+  },
+  {
+   "type": "Link",
+   "label": "Sales Invoice",
+   "link_type": "DocType",
+   "link_to": "Sales Invoice",
+   "hidden": 0,
+   "is_query_report": 0,
+   "onboard": 0,
+   "dependencies": "",
+   "only_for": ""
+  },
+  {
+   "type": "Card Break",
+   "label": "Requests",
+   "hidden": 0,
+   "is_query_report": 0,
+   "link_count": 2,
+   "onboard": 0
+  },
+  {
+   "type": "Link",
+   "label": "Store Inquiry",
+   "link_type": "DocType",
+   "link_to": "Store Inquiry",
+   "hidden": 0,
+   "is_query_report": 0,
+   "onboard": 0,
+   "dependencies": "",
+   "only_for": ""
+  },
+  {
+   "type": "Link",
+   "label": "Lead",
+   "link_type": "DocType",
+   "link_to": "Lead",
+   "hidden": 0,
+   "is_query_report": 0,
+   "onboard": 0,
+   "dependencies": "",
+   "only_for": ""
+  },
+  {
+   "type": "Card Break",
+   "label": "Catalog",
+   "hidden": 0,
+   "is_query_report": 0,
+   "link_count": 3,
+   "onboard": 0
+  },
+  {
+   "type": "Link",
+   "label": "Item",
+   "link_type": "DocType",
+   "link_to": "Item",
+   "hidden": 0,
+   "is_query_report": 0,
+   "onboard": 0,
+   "dependencies": "",
+   "only_for": ""
+  },
+  {
+   "type": "Link",
+   "label": "Item Group",
+   "link_type": "DocType",
+   "link_to": "Item Group",
+   "hidden": 0,
+   "is_query_report": 0,
+   "onboard": 0,
+   "dependencies": "",
+   "only_for": ""
+  },
+  {
+   "type": "Link",
+   "label": "Item Price",
+   "link_type": "DocType",
+   "link_to": "Item Price",
+   "hidden": 0,
+   "is_query_report": 0,
+   "onboard": 0,
+   "dependencies": "",
+   "only_for": ""
+  },
+  {
+   "type": "Card Break",
+   "label": "Website",
+   "hidden": 0,
+   "is_query_report": 0,
+   "link_count": 3,
+   "onboard": 0
+  },
+  {
+   "type": "Link",
+   "label": "Store Page",
+   "link_type": "DocType",
+   "link_to": "Store Page",
+   "hidden": 0,
+   "is_query_report": 0,
+   "onboard": 0,
+   "dependencies": "",
+   "only_for": ""
+  },
+  {
+   "type": "Link",
+   "label": "Blog Post",
+   "link_type": "DocType",
+   "link_to": "Blog Post",
+   "hidden": 0,
+   "is_query_report": 0,
+   "onboard": 0,
+   "dependencies": "",
+   "only_for": ""
+  },
+  {
+   "type": "Link",
+   "label": "Blog Category",
+   "link_type": "DocType",
+   "link_to": "Blog Category",
+   "hidden": 0,
+   "is_query_report": 0,
+   "onboard": 0,
+   "dependencies": "",
+   "only_for": ""
+  },
+  {
+   "type": "Card Break",
+   "label": "Setup",
+   "hidden": 0,
+   "is_query_report": 0,
+   "link_count": 1,
+   "onboard": 0
+  },
+  {
+   "type": "Link",
+   "label": "Store Settings",
+   "link_type": "DocType",
+   "link_to": "Store Settings",
+   "hidden": 0,
+   "is_query_report": 0,
+   "onboard": 0,
+   "dependencies": "",
+   "only_for": ""
+  }
+ ],
+ "title": "Store",
+ "modified": "2026-11-22 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Store",
+ "name": "Store",
+ "number_cards": [
+  {
+   "label": "Online Orders to Deliver",
+   "number_card_name": "Online Orders to Deliver"
+  },
+  {
+   "label": "Online Orders Unpaid",
+   "number_card_name": "Online Orders Unpaid"
+  },
+  {
+   "label": "Online Payments Failed",
+   "number_card_name": "Online Payments Failed"
+  },
+  {
+   "label": "New Requests",
+   "number_card_name": "New Requests"
+  },
+  {
+   "label": "Products in the Store",
+   "number_card_name": "Products in the Store"
+  }
+ ],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 32.0,
+ "shortcuts": [
+  {
+   "label": "Store Settings",
+   "link_to": "Store Settings",
+   "type": "DocType",
+   "doc_view": "List"
+  },
+  {
+   "label": "Store Inquiry",
+   "link_to": "Store Inquiry",
+   "type": "DocType",
+   "doc_view": "List"
+  },
+  {
+   "label": "Store Page",
+   "link_to": "Store Page",
+   "type": "DocType",
+   "doc_view": "List"
+  },
+  {
+   "label": "Sales Order",
+   "link_to": "Sales Order",
+   "type": "DocType",
+   "doc_view": "List"
+  }
+ ]
+}

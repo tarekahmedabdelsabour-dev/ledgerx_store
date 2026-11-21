@@ -1,0 +1,54 @@
+{% extends "ledgerx_store/templates/store_base.html" %}
+{% from "ledgerx_store/templates/includes/card.html" import card with context %}
+{% block page_content %}
+<section class="lx-hero"><div class="lx-wrap lx-hero-grid">
+  <div>
+    <h1>{{ hero_title }}</h1>
+    {% if store.hero_text or store.tagline %}<p class="lead">{{ store.hero_text or store.tagline }}</p>{% endif %}
+    <form class="lx-hero-search" action="/shop" method="get" role="search">
+      <input type="search" name="q" placeholder="{{ _('Search products') }}" aria-label="{{ _('Search products') }}">
+      <button class="lx-btn" type="submit">{{ _("Search") }}</button>
+    </form>
+    {% if cats %}<div class="lx-chips">{% for c in cats[:8] %}<a class="lx-chip" href="/shop?cat={{ c.store_slug }}">{{ c.name }}</a>{% endfor %}</div>{% endif %}
+  </div>
+  <div class="lx-hero-tags">{% for it in featured[:4] %}{{ card(it) }}{% endfor %}</div>
+</div></section>
+
+{% if cats and cats|length > 1 %}
+<section class="lx-section"><div class="lx-wrap">
+  <div class="lx-section-head"><h2>{{ _("Categories") }}</h2></div>
+  <div class="lx-cats">{% for c in cats[:12] %}<a class="lx-cat" href="/shop?cat={{ c.store_slug }}">{% if c.store_image %}<img src="{{ c.store_image }}" alt="" loading="lazy">{% else %}<i></i>{% endif %}<span>{{ c.name }}</span></a>{% endfor %}</div>
+</div></section>
+{% endif %}
+
+{% if featured|length > 4 %}
+<section class="lx-section"><div class="lx-wrap">
+  <div class="lx-section-head"><h2>{{ _("Featured products") }}</h2><a href="/shop">{{ _("See all products") }}</a></div>
+  <div class="lx-grid">{% for it in featured[4:] %}{{ card(it) }}{% endfor %}</div>
+</div></section>
+{% endif %}
+
+{% if cars %}
+<section class="lx-section"><div class="lx-wrap">
+  <div class="lx-section-head"><h2>{{ _("Cars for sale") }}</h2><a href="/cars">{{ _("See all cars") }}</a></div>
+  <div class="lx-grid">{% for c in cars %}
+    <a class="lx-card" href="/car/{{ c.name }}"><div class="ph">{% if c.image %}<img src="{{ c.image }}" alt="" loading="lazy">{% endif %}</div>
+    <div class="tx"><b>{{ c.make }} {{ c.model }} {{ c.year or "" }}</b><small>{{ "{:,}".format(c.mileage or 0) }} {{ _("km") }}</small></div>
+    <div class="price"><span>{{ money(c.asking_price) if c.asking_price else _("Ask for the price") }}</span></div></a>{% endfor %}</div>
+</div></section>
+{% endif %}
+
+{% if rooms %}
+<section class="lx-section"><div class="lx-wrap">
+  <div class="lx-section-head"><h2>{{ _("Rooms") }}</h2><a href="/stay">{{ _("See all rooms") }}</a></div>
+  <div class="lx-grid">{% for r in rooms %}<a class="lx-card" href="/stay#{{ r.name }}"><div class="tx"><b>{{ r.room_type_name }}</b><small>{{ r.hotel }}</small></div><div class="price"><span>{% if r.from_rate %}{{ _("From") }} {{ money(r.from_rate) }}{% else %}{{ _("Ask for the price") }}{% endif %}</span></div></a>{% endfor %}</div>
+</div></section>
+{% endif %}
+
+{% if news %}
+<section class="lx-section"><div class="lx-wrap">
+  <div class="lx-section-head"><h2>{{ _("News") }}</h2><a href="/news">{{ _("All news") }}</a></div>
+  <div class="lx-posts">{% for p in news %}<a class="lx-post" href="/news/{{ p.name }}">{% if p.meta_image %}<img src="{{ p.meta_image }}" alt="" loading="lazy">{% endif %}<div><h3>{{ p.title }}</h3><p class="lx-muted">{{ p.blog_intro or "" }}</p></div></a>{% endfor %}</div>
+</div></section>
+{% endif %}
+{% endblock %}

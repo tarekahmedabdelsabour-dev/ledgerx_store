@@ -1,0 +1,42 @@
+{% extends "ledgerx_store/templates/store_base.html" %}
+{% block page_content %}
+<div class="lx-wrap">
+  <h1 style="margin-block:24px 0">{{ _("Checkout") }}</h1>
+  <form id="lx-checkout" class="lx-cartbox" novalidate>
+    <div>
+      <div class="lx-panel">
+        <h2 style="margin-block-end:12px">{{ _("Your details") }}</h2>
+        <div class="lx-row">
+          <label class="lx-field"><span>{{ _("Full name") }}</span><input name="name" required autocomplete="name" value="{{ prefill.get('name') or '' }}"></label>
+          <label class="lx-field"><span>{{ _("Phone") }}</span><input name="phone" required type="tel" autocomplete="tel" inputmode="tel" value="{{ prefill.get('phone') or '' }}"></label>
+        </div>
+        <label class="lx-field"><span>{{ _("Email (optional)") }}</span><input name="email" type="email" autocomplete="email" value="{{ prefill.get('email') or '' }}"></label>
+        <label style="display:flex;gap:8px;align-items:center;margin-block-end:10px"><input type="checkbox" name="pickup" value="1"> {{ _("I will pick it up from the store") }}</label>
+        <div id="lx-addr">
+          <label class="lx-field"><span>{{ _("Address") }}</span><input name="line1" autocomplete="address-line1"></label>
+          <div class="lx-row">
+            <label class="lx-field"><span>{{ _("City") }}</span><input name="city" autocomplete="address-level2"></label>
+            <label class="lx-field"><span>{{ _("Governorate / region") }}</span><input name="state" autocomplete="address-level1"></label>
+          </div>
+          <label class="lx-field"><span>{{ _("Landmark or floor (optional)") }}</span><input name="line2"></label>
+        </div>
+        <label class="lx-field"><span>{{ _("Notes (optional)") }}</span><textarea name="notes"></textarea></label>
+      </div>
+      <div class="lx-panel lx-pay" style="margin-block-start:16px">
+        <h2 style="margin-block-end:12px">{{ _("Payment") }}</h2>
+        {% for m in methods %}
+        <label><input type="radio" name="payment" value="{{ m }}" {{ 'checked' if loop.first }}><span>{{ _(m) }}
+          {% if m == "Bank Transfer" and store.transfer_instructions %}<br><small class="lx-muted" style="white-space:pre-line;font-weight:400">{{ store.transfer_instructions }}</small>{% endif %}</span></label>
+        {% endfor %}
+        {% if not methods %}<p class="lx-alert">{{ _("No payment method is available right now. Contact us.") }}</p>{% endif %}
+      </div>
+    </div>
+    <aside class="lx-panel">
+      <h2 style="margin-block-end:8px">{{ _("Order summary") }}</h2>
+      <div id="lx-co-sum" aria-live="polite"></div>
+      <p id="lx-co-err" class="lx-alert" hidden role="alert"></p>
+      <button class="lx-btn accent" type="submit" style="inline-size:100%">{{ _("Place order") }}</button>
+    </aside>
+  </form>
+</div>
+{% endblock %}

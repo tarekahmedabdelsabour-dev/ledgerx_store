@@ -1,0 +1,8 @@
+{% extends "ledgerx_store/templates/store_base.html" %}
+{% block page_content %}
+<div class="lx-wrap" style="padding-block:28px">
+  <h1 style="margin-block-end:16px">{{ _("News") }}</h1>
+  {% if posts %}<div class="lx-posts">{% for p in posts %}<a class="lx-post" href="/news/{{ p.name }}">{% if p.meta_image %}<img src="{{ p.meta_image }}" alt="" loading="lazy">{% endif %}<div><h3>{{ p.title }}</h3><p class="lx-muted">{{ p.blog_intro or "" }}</p><small class="lx-muted">{{ frappe.format_date(p.published_on) }}</small></div></a>{% endfor %}</div>
+  {% else %}<div class="lx-empty">{{ _("No news yet.") }}</div>{% endif %}
+</div>
+{% endblock %}

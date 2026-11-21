@@ -1,0 +1,115 @@
+{
+ "actions": [],
+ "creation": "2026-11-22 08:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "slug",
+  "published",
+  "in_menu",
+  "sort_order",
+  "cb1",
+  "image",
+  "summary",
+  "sb_body",
+  "body"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "slug",
+   "fieldtype": "Data",
+   "label": "Address Part",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1,
+   "description": "The page opens at /p/<this>."
+  },
+  {
+   "fieldname": "published",
+   "fieldtype": "Check",
+   "label": "Published",
+   "default": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "in_menu",
+   "fieldtype": "Check",
+   "label": "Show in the Menu",
+   "default": 0
+  },
+  {
+   "fieldname": "sort_order",
+   "fieldtype": "Int",
+   "label": "Order in the Menu",
+   "default": 0
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "label": "Top Image"
+  },
+  {
+   "fieldname": "summary",
+   "fieldtype": "Small Text",
+   "label": "Summary"
+  },
+  {
+   "fieldname": "sb_body",
+   "fieldtype": "Section Break",
+   "label": "Content"
+  },
+  {
+   "fieldname": "body",
+   "fieldtype": "Text Editor",
+   "label": "Content"
+  }
+ ],
+ "links": [],
+ "modified": "2026-11-22 08:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Store",
+ "name": "Store Page",
+ "owner": "Administrator",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "permissions": [
+  {
+   "role": "Store Manager",
+   "read": 1,
+   "report": 1,
+   "print": 1,
+   "export": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "print": 1,
+   "export": 1
+  }
+ ],
+ "allow_rename": 0,
+ "autoname": "field:slug",
+ "icon": "fa fa-file-text-o",
+ "title_field": "title",
+ "track_changes": 1
+}

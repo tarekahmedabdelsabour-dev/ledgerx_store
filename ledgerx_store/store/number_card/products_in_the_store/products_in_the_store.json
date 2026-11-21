@@ -1,0 +1,20 @@
+{
+ "creation": "2026-11-22 09:00:00.000000",
+ "docstatus": 0,
+ "doctype": "Number Card",
+ "document_type": "Item",
+ "filters_json": "[[\"Item\", \"store_publish\", \"=\", 1], [\"Item\", \"disabled\", \"=\", 0]]",
+ "function": "Count",
+ "idx": 0,
+ "is_public": 1,
+ "is_standard": 1,
+ "label": "Products in the Store",
+ "modified": "2026-11-22 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Store",
+ "name": "Products in the Store",
+ "owner": "Administrator",
+ "show_percentage_stats": 0,
+ "stats_time_interval": "Daily",
+ "type": "Document Type"
+}

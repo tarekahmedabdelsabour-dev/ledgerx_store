@@ -1,0 +1,27 @@
+{% extends "ledgerx_store/templates/store_base.html" %}
+{% from "ledgerx_store/templates/includes/card.html" import card with context %}
+{% block page_content %}
+<div class="lx-wrap">
+<div class="lx-prod">
+  <div class="pic">{% if item.image %}<img src="{{ item.image }}" alt="{{ item.item_name }}">{% endif %}</div>
+  <div>
+    {% if group_slug %}<a class="lx-muted" href="/shop?cat={{ group_slug }}">{{ item.item_group }}</a>{% endif %}
+    <h1>{{ item.item_name }}</h1>
+    {% if item.get("ph_strength") or item.get("ph_form") %}<p class="lx-muted">{{ item.get("ph_strength") or "" }} {{ item.get("ph_form") or "" }}</p>{% endif %}
+    <div class="lx-big-price">{{ money(item.price) }}</div>
+    <span class="lx-stock {{ '' if item.in_stock else 'out' }}">{{ _("In stock") if item.in_stock else _("Out of stock") }}</span>
+    {% if item.store_summary %}<p style="margin-block-start:12px">{{ item.store_summary }}</p>{% endif %}
+    {% if item.in_stock %}
+    <div class="lx-buy">
+      <div class="lx-qty"><button type="button" data-step="-" aria-label="−">−</button><input value="1" inputmode="numeric" data-qty-for="{{ item.name }}" aria-label="{{ _('Quantity') }}"><button type="button" data-step="+" aria-label="+">+</button></div>
+      <button class="lx-btn accent" type="button" data-add="{{ item.name }}">{{ _("Add to cart") }}</button>
+      <a class="lx-btn ghost" href="/cart">{{ _("View cart") }}</a>
+    </div>
+    {% else %}<p class="lx-alert warn">{{ _("This product is out of stock right now. Contact us to ask when it returns.") }}</p>{% endif %}
+    {% if item.get("ph_is_drug") %}<p class="lx-muted">{{ _("Read the leaflet before use. Ask a pharmacist if you are unsure.") }}</p>{% endif %}
+  </div>
+</div>
+{% if detail_html %}<div class="lx-detail">{{ detail_html | safe }}</div>{% endif %}
+{% if related %}<section class="lx-section"><div class="lx-section-head"><h2>{{ _("You may also like") }}</h2></div><div class="lx-grid">{% for it in related %}{{ card(it) }}{% endfor %}</div></section>{% endif %}
+</div>
+{% endblock %}

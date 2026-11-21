@@ -1,0 +1,422 @@
+{
+ "actions": [],
+ "creation": "2026-11-22 08:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "store_name",
+  "tagline",
+  "logo",
+  "cb0",
+  "primary_color",
+  "accent_color",
+  "make_home_page",
+  "sb_sell",
+  "company",
+  "price_list",
+  "warehouses",
+  "customer_group",
+  "territory",
+  "cb1",
+  "sales_taxes_template",
+  "shipping_fee",
+  "free_shipping_over",
+  "shipping_account",
+  "min_order",
+  "delivery_days",
+  "auto_submit_orders",
+  "sb_pay",
+  "cod_enabled",
+  "transfer_enabled",
+  "transfer_instructions",
+  "online_gateway",
+  "online_mode_of_payment",
+  "cb2",
+  "paymob_api_key",
+  "paymob_integration_id",
+  "paymob_iframe_id",
+  "paymob_hmac_secret",
+  "sb_show",
+  "show_pharmacy",
+  "show_cars",
+  "show_hotels",
+  "show_news",
+  "items_per_page",
+  "sb_home",
+  "hero_title",
+  "hero_text",
+  "news_category",
+  "sb_contact",
+  "phone",
+  "whatsapp",
+  "email",
+  "cb3",
+  "address",
+  "working_hours",
+  "footer_text",
+  "sb_menu",
+  "menu",
+  "sb_alerts",
+  "notify_role",
+  "meta_description"
+ ],
+ "fields": [
+  {
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Store Is Open",
+   "default": 1
+  },
+  {
+   "fieldname": "store_name",
+   "fieldtype": "Data",
+   "label": "Store Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "tagline",
+   "fieldtype": "Data",
+   "label": "Tagline"
+  },
+  {
+   "fieldname": "logo",
+   "fieldtype": "Attach Image",
+   "label": "Logo"
+  },
+  {
+   "fieldname": "cb0",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "primary_color",
+   "fieldtype": "Color",
+   "label": "Main Color",
+   "default": "#0B2A5B"
+  },
+  {
+   "fieldname": "accent_color",
+   "fieldtype": "Color",
+   "label": "Accent Color",
+   "default": "#E8A317"
+  },
+  {
+   "fieldname": "make_home_page",
+   "fieldtype": "Check",
+   "label": "Use the Store as the Home Page of the Website"
+  },
+  {
+   "fieldname": "sb_sell",
+   "fieldtype": "Section Break",
+   "label": "Selling"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "price_list",
+   "fieldtype": "Link",
+   "label": "Price List",
+   "options": "Price List",
+   "reqd": 1,
+   "description": "Only items with a price in this list can be sold."
+  },
+  {
+   "fieldname": "warehouses",
+   "fieldtype": "Table",
+   "label": "Warehouses That Fill Online Orders",
+   "options": "Store Warehouse",
+   "description": "Stock of these warehouses is what the store shows."
+  },
+  {
+   "fieldname": "customer_group",
+   "fieldtype": "Link",
+   "label": "Customer Group for New Customers",
+   "options": "Customer Group"
+  },
+  {
+   "fieldname": "territory",
+   "fieldtype": "Link",
+   "label": "Territory for New Customers",
+   "options": "Territory"
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sales_taxes_template",
+   "fieldtype": "Link",
+   "label": "Sales Taxes Template",
+   "options": "Sales Taxes and Charges Template"
+  },
+  {
+   "fieldname": "shipping_fee",
+   "fieldtype": "Currency",
+   "label": "Shipping Fee",
+   "default": 0
+  },
+  {
+   "fieldname": "free_shipping_over",
+   "fieldtype": "Currency",
+   "label": "Free Shipping Above",
+   "default": 0,
+   "description": "0 = never free."
+  },
+  {
+   "fieldname": "shipping_account",
+   "fieldtype": "Link",
+   "label": "Shipping Income Account",
+   "options": "Account",
+   "description": "Required when the shipping fee is more than zero."
+  },
+  {
+   "fieldname": "min_order",
+   "fieldtype": "Currency",
+   "label": "Minimum Order",
+   "default": 0
+  },
+  {
+   "fieldname": "delivery_days",
+   "fieldtype": "Int",
+   "label": "Delivery Takes (days)",
+   "default": 3
+  },
+  {
+   "fieldname": "auto_submit_orders",
+   "fieldtype": "Check",
+   "label": "Submit Orders Automatically",
+   "default": 1,
+   "description": "Off: the order stays a draft until a person checks it."
+  },
+  {
+   "fieldname": "sb_pay",
+   "fieldtype": "Section Break",
+   "label": "Payment"
+  },
+  {
+   "fieldname": "cod_enabled",
+   "fieldtype": "Check",
+   "label": "Cash on Delivery",
+   "default": 1
+  },
+  {
+   "fieldname": "transfer_enabled",
+   "fieldtype": "Check",
+   "label": "Bank Transfer or Wallet",
+   "default": 0
+  },
+  {
+   "fieldname": "transfer_instructions",
+   "fieldtype": "Small Text",
+   "label": "Transfer Instructions",
+   "description": "Account number, wallet number, and what to write in the transfer note."
+  },
+  {
+   "fieldname": "online_gateway",
+   "fieldtype": "Select",
+   "label": "Online Payment",
+   "options": "None\nPaymob",
+   "default": "None"
+  },
+  {
+   "fieldname": "online_mode_of_payment",
+   "fieldtype": "Link",
+   "label": "Mode of Payment for Online Payments",
+   "options": "Mode of Payment"
+  },
+  {
+   "fieldname": "cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "paymob_api_key",
+   "fieldtype": "Password",
+   "label": "Paymob API Key"
+  },
+  {
+   "fieldname": "paymob_integration_id",
+   "fieldtype": "Data",
+   "label": "Paymob Integration ID"
+  },
+  {
+   "fieldname": "paymob_iframe_id",
+   "fieldtype": "Data",
+   "label": "Paymob Frame ID"
+  },
+  {
+   "fieldname": "paymob_hmac_secret",
+   "fieldtype": "Password",
+   "label": "Paymob HMAC Secret",
+   "description": "The callback address to give Paymob is shown in the install guide."
+  },
+  {
+   "fieldname": "sb_show",
+   "fieldtype": "Section Break",
+   "label": "What the Store Shows"
+  },
+  {
+   "fieldname": "show_pharmacy",
+   "fieldtype": "Check",
+   "label": "Sell Over-the-counter Pharmacy Products",
+   "default": 1,
+   "description": "Prescription and controlled drugs are never sold online."
+  },
+  {
+   "fieldname": "show_cars",
+   "fieldtype": "Check",
+   "label": "Show Cars for Sale",
+   "default": 0
+  },
+  {
+   "fieldname": "show_hotels",
+   "fieldtype": "Check",
+   "label": "Show Hotel Rooms",
+   "default": 0
+  },
+  {
+   "fieldname": "show_news",
+   "fieldtype": "Check",
+   "label": "Show News",
+   "default": 1
+  },
+  {
+   "fieldname": "items_per_page",
+   "fieldtype": "Int",
+   "label": "Products per Page",
+   "default": 24
+  },
+  {
+   "fieldname": "sb_home",
+   "fieldtype": "Section Break",
+   "label": "Home Page"
+  },
+  {
+   "fieldname": "hero_title",
+   "fieldtype": "Data",
+   "label": "Main Headline"
+  },
+  {
+   "fieldname": "hero_text",
+   "fieldtype": "Small Text",
+   "label": "Short Text under It"
+  },
+  {
+   "fieldname": "news_category",
+   "fieldtype": "Link",
+   "label": "News Category",
+   "options": "Blog Category",
+   "description": "Blank: all published news."
+  },
+  {
+   "fieldname": "sb_contact",
+   "fieldtype": "Section Break",
+   "label": "Contact and Footer"
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone"
+  },
+  {
+   "fieldname": "whatsapp",
+   "fieldtype": "Data",
+   "label": "WhatsApp Number",
+   "description": "With country code, digits only."
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email"
+  },
+  {
+   "fieldname": "cb3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "working_hours",
+   "fieldtype": "Data",
+   "label": "Working Hours"
+  },
+  {
+   "fieldname": "footer_text",
+   "fieldtype": "Small Text",
+   "label": "Footer Text"
+  },
+  {
+   "fieldname": "sb_menu",
+   "fieldtype": "Section Break",
+   "label": "Menu"
+  },
+  {
+   "fieldname": "menu",
+   "fieldtype": "Table",
+   "label": "Extra Menu Links",
+   "options": "Store Link"
+  },
+  {
+   "fieldname": "sb_alerts",
+   "fieldtype": "Section Break",
+   "label": "Notifications"
+  },
+  {
+   "fieldname": "notify_role",
+   "fieldtype": "Link",
+   "label": "Tell This Role About New Orders",
+   "options": "Role",
+   "default": "Store Manager"
+  },
+  {
+   "fieldname": "meta_description",
+   "fieldtype": "Small Text",
+   "label": "Description for Search Engines"
+  }
+ ],
+ "links": [],
+ "modified": "2026-11-22 08:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Store",
+ "name": "Store Settings",
+ "owner": "Administrator",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "permissions": [
+  {
+   "role": "Store Manager",
+   "read": 1,
+   "report": 1,
+   "print": 1,
+   "export": 1,
+   "write": 1
+  },
+  {
+   "role": "Sales Manager",
+   "read": 1,
+   "report": 1,
+   "print": 1,
+   "export": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "print": 1,
+   "export": 1
+  }
+ ],
+ "allow_rename": 0,
+ "issingle": 1
+}
