@@ -2,7 +2,7 @@
 import frappe
 from frappe.utils import fmt_money
 
-from ledgerx_store import data
+from ledgerx_store import __version__, data
 
 
 def base(context, title=None, description=None, image=None):
@@ -13,6 +13,7 @@ def base(context, title=None, description=None, image=None):
 	context.show_sidebar = 0
 	context.no_breadcrumbs = 1
 	context.store = s
+	context.v = __version__
 	context.currency = frappe.db.get_value("Price List", s.price_list, "currency") or frappe.db.get_value("Company", s.company, "default_currency")
 	context.title = f"{title} | {s.store_name}" if title else s.store_name
 	context.description = description or s.meta_description or s.tagline or ""

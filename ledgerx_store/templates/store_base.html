@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/ledgerx_store/css/store.css?v=1.0.0">
+<link rel="stylesheet" href="/assets/ledgerx_store/css/store.css?v={{ v }}">
 <style>:root{--primary:{{ store.primary_color or '#0B2A5B' }};--accent:{{ store.accent_color or '#E8A317' }}}</style>
 {% endautoescape %}
 {% endblock %}
@@ -80,6 +80,6 @@
   </div>
 </footer>
 <script>window.LX_I18N={"Added to the cart":{{ _("Added to the cart") | tojson }},"Your cart is empty":{{ _("Your cart is empty") | tojson }},"Remove":{{ _("Remove") | tojson }},"Total":{{ _("Total") | tojson }},"Subtotal":{{ _("Subtotal") | tojson }},"Tax":{{ _("Tax") | tojson }},"Shipping":{{ _("Shipping") | tojson }},"Free":{{ _("Free") | tojson }},"Checkout":{{ _("Checkout") | tojson }},"Placing your order":{{ _("Placing your order") | tojson }},"Sent. We will contact you soon.":{{ _("Sent. We will contact you soon.") | tojson }},"Something went wrong. Try again.":{{ _("Something went wrong. Try again.") | tojson }},"Only {0} left":{{ _("Only {0} left") | tojson }},"No longer available":{{ _("No longer available") | tojson }},"The quantity was reduced to {0}":{{ _("The quantity was reduced to {0}") | tojson }},"Minimum order is {0}":{{ _("Minimum order is {0}") | tojson }},"Continue shopping":{{ _("Continue shopping") | tojson }},"Place order":{{ _("Place order") | tojson }},"Pay now":{{ _("Pay now") | tojson }},"Out of stock":{{ _("Out of stock") | tojson }}};</script>
-<script src="/assets/ledgerx_store/js/store.js?v=1.0.0"></script>
+<script src="/assets/ledgerx_store/js/store.js?v={{ v }}"></script>
 {% endautoescape %}
 {% endblock %}
