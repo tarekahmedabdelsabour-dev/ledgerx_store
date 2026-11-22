@@ -47,6 +47,25 @@ def place_order(lines=None, info=None, address=None, payment="Cash on Delivery",
 
 @frappe.whitelist(allow_guest=True, methods=["POST"])
 @rate_limit(limit=10, seconds=600)
+def pay_order(order, key=None):
+	"""Opens the card payment page again for an order that is not paid yet (the first try failed or was closed)."""
+	s = data.settings()
+	if s.online_gateway != "Paymob" or not orders.can_view(order, key, frappe.session.user):
+		frappe.throw(_("This order cannot be paid online."), frappe.PermissionError)
+	so = frappe.get_doc("Sales Order", order)
+	if so.docstatus == 2 or so.store_payment_method != "Online Payment" or so.store_payment_status == "Paid":
+		frappe.throw(_("This order cannot be paid online."))
+	from ledgerx_store.gateways import paymob
+
+	addr = frappe.db.get_value("Address", so.shipping_address_name, ["address_line1", "city", "state"], as_dict=True) if so.shipping_address_name else {}
+	email = frappe.db.get_value("Contact Email", {"parent": so.contact_person, "is_primary": 1}, "email_id") if so.contact_person else None
+	url = paymob.start(so, {"name": so.customer_name, "phone": so.store_phone, "email": email}, {"line1": (addr or {}).get("address_line1"), "city": (addr or {}).get("city"), "state": (addr or {}).get("state")})
+	frappe.db.set_value("Sales Order", so.name, "store_payment_status", "Pending", update_modified=False)
+	return {"pay_url": url}
+
+
+@frappe.whitelist(allow_guest=True, methods=["POST"])
+@rate_limit(limit=10, seconds=600)
 def send_inquiry(kind, full_name, phone="", email="", message="", ref_doctype="", ref_name="", date_from=None, date_to=None, guests=None):
 	return inquiries.create(kind, full_name, phone, email, message, ref_doctype, ref_name, date_from, date_to, guests)
 

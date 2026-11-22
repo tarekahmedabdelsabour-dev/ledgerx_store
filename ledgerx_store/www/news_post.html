@@ -1,10 +1,12 @@
 {% extends "ledgerx_store/templates/store_base.html" %}
 {% block page_content %}
+{% autoescape true %}
 <article class="lx-article">
   <h1>{{ post.title }}</h1>
   <p class="lx-muted">{{ frappe.format_date(post.published_on) }}</p>
-  {% if post.meta_image %}<p><img src="{{ post.meta_image }}" alt=""></p>{% endif %}
-  <div class="body">{{ body | safe }}</div>
+  {% if post.image %}<p><img src="{{ post.image }}" alt=""></p>{% endif %}
+  <div class="body">{{ (post.body or "") | safe }}</div>
   <p><a href="/news">{{ _("All news") }}</a></p>
 </article>
+{% endautoescape %}
 {% endblock %}

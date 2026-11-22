@@ -12,12 +12,15 @@ bench --site mysite.localhost clear-cache
 ```
 Full restart, then Ctrl+Shift+R. Open the store at `http://mysite.localhost:8001/store`.
 
+The install needs internet access for `pip`. If it stops with `Failed to resolve 'pypi.org'`, fix the network and run the same command again.
+
 ## First day
 1. **Store Settings**: name, company, price list, the warehouse(s) that fill online orders, shipping fee (and the shipping income account), payment methods, contact details.
 2. **Item Group**: tick *Show in the Online Store* on the categories you want.
 3. **Item**: tick *Show in the Online Store* on each product. It needs a price in the store price list, an image, and stock in the chosen warehouse (or tick *Sell even when out of stock*).
 4. Open `/store`. Add to cart, check out as a guest, and look at the Sales Order that was created.
-5. Open `/contact-us` and send a message: a Lead and a Store Inquiry appear.
+5. Open `/contact-us` and send a message: a Store Inquiry appears, with a lead in the CRM (CRM Lead when the CRM app is installed, otherwise Lead).
+6. Optional: write news in **Store Post** (tick Published) and pages in **Store Page**; they show under `/news` and `/p/<address>`.
 
 ## Pharmacy, cars, hotels
 - Pharmacy products appear when their class is OTC, Cosmetic, Supplement or Medical Supply. Prescription and controlled products are blocked even if someone ticks the box. Expired batches are not counted in the stock the store shows.

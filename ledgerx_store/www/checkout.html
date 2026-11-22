@@ -1,5 +1,6 @@
 {% extends "ledgerx_store/templates/store_base.html" %}
 {% block page_content %}
+{% autoescape true %}
 <div class="lx-wrap">
   <h1 style="margin-block:24px 0">{{ _("Checkout") }}</h1>
   <form id="lx-checkout" class="lx-cartbox" novalidate>
@@ -39,4 +40,5 @@
     </aside>
   </form>
 </div>
+{% endautoescape %}
 {% endblock %}

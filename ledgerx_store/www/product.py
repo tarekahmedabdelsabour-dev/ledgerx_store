@@ -1,5 +1,5 @@
 import frappe
-from frappe import _
+from frappe.utils.html_utils import sanitize_html
 
 from ledgerx_store import data, web
 
@@ -12,4 +12,4 @@ def get_context(context):
 	context.item = item
 	context.related = data.related(item.item_group, item.name)
 	context.group_slug = frappe.db.get_value("Item Group", item.item_group, "store_slug")
-	context.detail_html = item.web_description or item.description or ""
+	context.detail_html = sanitize_html(item.web_description or item.description or "")

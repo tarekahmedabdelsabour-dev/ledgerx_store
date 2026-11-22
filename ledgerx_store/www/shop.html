@@ -1,11 +1,12 @@
 {% extends "ledgerx_store/templates/store_base.html" %}
 {% from "ledgerx_store/templates/includes/card.html" import card with context %}
 {% block page_content %}
+{% autoescape true %}
 <div class="lx-wrap lx-shop">
   <aside class="lx-side" aria-label="{{ _('Categories') }}">
     <h3>{{ _("Categories") }}</h3>
-    <a href="/shop{{ '?q=' ~ q if q else '' }}" class="{{ 'on' if not cat }}">{{ _("All products") }}</a>
-    {% for c in cats %}<a href="/shop?cat={{ c.store_slug }}{{ '&q=' ~ q if q else '' }}" class="{{ 'on' if cat == c.store_slug }}">{{ c.name }}</a>{% endfor %}
+    <a href="/shop{{ '?' ~ q_url if q_url else '' }}" class="{{ 'on' if not cat }}">{{ _("All products") }}</a>
+    {% for c in cats %}<a href="/shop?cat={{ c.store_slug | urlencode }}{{ '&' ~ q_url if q_url else '' }}" class="{{ 'on' if cat == c.store_slug }}">{{ c.name }}</a>{% endfor %}
   </aside>
   <section>
     <div class="lx-bar">
@@ -28,4 +29,5 @@
     {% endif %}
   </section>
 </div>
+{% endautoescape %}
 {% endblock %}

@@ -54,6 +54,8 @@ def handle_callback(payload, received_hmac):
 		return None
 	paid_cents = obj.get("amount_cents") or 0
 	so = frappe.get_doc("Sales Order", so_name)
+	if so.store_payment_status == "Paid":
+		return None
 	if obj.get("success") and not obj.get("pending") and not obj.get("is_voided") and not obj.get("is_refunded"):
 		if abs(paid_cents - eng.cents(so.grand_total)) > 1:
 			frappe.db.set_value("Sales Order", so_name, "store_payment_status", "Failed", update_modified=False)

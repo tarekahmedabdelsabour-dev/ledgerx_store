@@ -1,5 +1,6 @@
 {% extends "ledgerx_store/templates/store_base.html" %}
 {% block page_content %}
+{% autoescape true %}
 <div class="lx-wrap" style="padding-block:28px">
   <h1 style="margin-block-end:16px">{{ _("Cars for sale") }}</h1>
   <div class="lx-grid">{% for c in cars %}
@@ -7,4 +8,5 @@
     <div class="tx"><b>{{ c.make }} {{ c.model }} {{ c.year or "" }}</b><small>{{ c.condition }} · {{ "{:,}".format(c.mileage or 0) }} {{ _("km") }}</small></div>
     <div class="price"><span>{{ money(c.asking_price) if c.asking_price else _("Ask for the price") }}</span></div></a>{% endfor %}</div>
 </div>
+{% endautoescape %}
 {% endblock %}

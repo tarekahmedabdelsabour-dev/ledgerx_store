@@ -1,5 +1,6 @@
 {% extends "ledgerx_store/templates/store_base.html" %}
 {% block page_content %}
+{% autoescape true %}
 <div class="lx-wrap" style="padding-block:28px">
   <div class="lx-alert ok"><b>{{ _("Thank you. We received your order.") }}</b></div>
   <h1>{{ so.name }}</h1>
@@ -10,9 +11,14 @@
   </div>
   <p class="lx-muted">{{ _("Expected delivery") }}: {{ frappe.format_date(so.delivery_date) }}{% if address_text %} · {{ address_text }}{% endif %}</p>
   {% if so.store_payment_method == "Bank Transfer" and so.store_payment_status != "Paid" and store.transfer_instructions %}<div class="lx-alert warn" style="white-space:pre-line">{{ store.transfer_instructions }}</div>{% endif %}
+  {% if so.store_payment_method == "Online Payment" and so.store_payment_status != "Paid" and so.docstatus != 2 %}
+  <p><button class="lx-btn accent" type="button" data-pay="{{ so.name }}" data-key="{{ key }}">{{ _("Pay now") }}</button></p>
+  <p class="lx-alert" data-pay-err hidden role="alert"></p>
+  {% endif %}
   <table class="lx-table"><thead><tr><th>{{ _("Product") }}</th><th>{{ _("Qty") }}</th><th>{{ _("Amount") }}</th></tr></thead><tbody>
   {% for l in lines %}<tr><td>{{ l.item_name }}</td><td>{{ l.qty | int }}</td><td>{{ money(l.amount) }}</td></tr>{% endfor %}
   <tr><td colspan="2"><b>{{ _("Total") }}</b></td><td><b>{{ money(so.grand_total) }}</b></td></tr></tbody></table>
   <p style="margin-block-start:20px"><a class="lx-btn ghost" href="/shop">{{ _("Continue shopping") }}</a></p>
 </div>
+{% endautoescape %}
 {% endblock %}

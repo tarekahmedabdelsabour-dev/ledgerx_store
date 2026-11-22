@@ -13,10 +13,16 @@ def settings_validate(doc, method=None):
 
 
 def settings_on_update(doc, method=None):
-	if doc.make_home_page:
+	from frappe.website.utils import clear_cache
+
+	home = frappe.db.get_single_value("Website Settings", "home_page")
+	if doc.make_home_page and home != "store":
 		frappe.db.set_single_value("Website Settings", "home_page", "store")
-	elif frappe.db.get_single_value("Website Settings", "home_page") == "store":
+	elif not doc.make_home_page and home == "store":
 		frappe.db.set_single_value("Website Settings", "home_page", "")
+	else:
+		return
+	clear_cache()
 
 
 def item_validate(doc, method=None):
@@ -32,5 +38,10 @@ def item_validate(doc, method=None):
 
 
 def group_validate(doc, method=None):
-	if doc.get("store_visible") and not doc.store_slug:
-		doc.store_slug = cart.slugify(doc.item_group_name or doc.name, doc.name)
+	if not doc.get("store_visible"):
+		return
+	taken = set(frappe.get_all("Item Group", filters={"store_slug": ["is", "set"], "name": ["!=", doc.name]}, pluck="store_slug"))
+	if not doc.store_slug:
+		doc.store_slug = cart.unique_slug(cart.slugify(doc.item_group_name or doc.name, doc.name), taken)
+	elif doc.store_slug in taken:
+		frappe.throw(_("Another category already uses the address part {0}.").format(doc.store_slug))

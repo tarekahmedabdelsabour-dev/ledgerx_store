@@ -1,6 +1,6 @@
 {
  "actions": [],
- "creation": "2026-11-22 08:00:00.000000",
+ "creation": "2026-11-22 12:00:00.000000",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -10,6 +10,7 @@
   "phone",
   "cb1",
   "email",
+  "lead_doctype",
   "lead",
   "ref_doctype",
   "ref_name",
@@ -63,10 +64,18 @@
    "label": "Email"
   },
   {
-   "fieldname": "lead",
+   "fieldname": "lead_doctype",
    "fieldtype": "Link",
+   "label": "Lead Type",
+   "options": "DocType",
+   "read_only": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "lead",
+   "fieldtype": "Dynamic Link",
    "label": "Lead",
-   "options": "Lead",
+   "options": "lead_doctype",
    "read_only": 1
   },
   {
@@ -117,7 +126,7 @@
   }
  ],
  "links": [],
- "modified": "2026-11-22 08:00:00.000000",
+ "modified": "2026-11-22 12:00:00.000000",
  "modified_by": "Administrator",
  "module": "Store",
  "name": "Store Inquiry",

@@ -5,7 +5,7 @@ An online store and a website, connected to the same stock, prices, customers, o
 - **Store**: product list with search, categories and sorting; product page; cart in the browser; checkout for guests and signed-in customers; order status page and "My orders".
 - **Orders**: every web order is a normal Sales Order (customer, address and contact are created or reused). Stock, delivery notes, invoices and payments follow the usual flow.
 - **Payment**: cash on delivery; bank transfer or wallet confirmed by staff with one button (it creates the Payment Entry); online card payment through Paymob.
-- **Pages**: pages you write yourself, news from the blog, a contact form that creates a Lead in the CRM, and a "My orders" page.
+- **Pages**: pages you write yourself, news posts you write in Store Post, a contact form that creates a Lead in the CRM, and a "My orders" page.
 - **Other modules**: over-the-counter pharmacy products (prescription and controlled drugs are never sold), cars for sale with a test-drive request (creates the showroom's Test Drive), hotel rooms with a booking request.
 - Arabic first (right-to-left), works in English too. No page needs the desk.
 

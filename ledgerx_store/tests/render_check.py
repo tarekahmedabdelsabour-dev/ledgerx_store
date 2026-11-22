@@ -35,24 +35,45 @@ def contexts():
 	b = base()
 	car = D(name="CAR-1", make="Kia", model="Rio", year=2022, mileage=40000, color="Red", fuel="Petrol", transmission="Automatic", engine_cc=1600, condition="Used", asking_price=650000, image="", notes="n")
 	room = D(name="RT-1", room_type_name="Deluxe", hotel="H", max_adults=2, max_children=1, beds="1 King", description="d", from_rate=1200.0, currency="EGP")
-	so = D(name="SO-1", status="To Deliver and Bill", per_delivered=0, store_payment_method="Bank Transfer", store_payment_status="Unpaid", delivery_date=datetime.date(2026, 11, 25), grand_total=100.0)
+	so = D(name="SO-1", status="To Deliver and Bill", per_delivered=0, docstatus=1, store_payment_method="Bank Transfer", store_payment_status="Unpaid", delivery_date=datetime.date(2026, 11, 25), grand_total=100.0)
 	item = D(name="A", item_name="Panadol", image="", item_group="Cat", price=25.5, in_stock=True, store_summary="s", ph_is_drug=1, ph_strength="500 mg", ph_form="Tablet")
 	return {
-		"store": dict(b, featured=[ITEM] * 8, news=[D(name="n1", title="T", blog_intro="i", meta_image="")], cars=[car], rooms=[room], hero_title="Hello"),
-		"shop": dict(b, items=[ITEM] * 3, total=3, pages=2, cat_title="Cat", base_query="q=x"),
+		"store": dict(b, featured=[ITEM] * 8, news=[D(name="n1", title="T", summary="i", image="")], cars=[car], rooms=[room], hero_title="Hello"),
+		"shop": dict(b, items=[ITEM] * 3, total=3, pages=2, cat_title="Cat", base_query="q=x", q_url="q=x"),
 		"product": dict(b, item=item, related=[ITEM], group_slug="cat", detail_html="<p>x</p>"),
 		"cart": b,
 		"checkout": dict(b, methods=["Cash on Delivery", "Bank Transfer"], prefill={}),
 		"order": dict(b, so=so, lines=[D(item_name="Panadol", qty=2, amount=51.0)], address_text="Cairo"),
 		"my-orders": dict(b, orders=[D(name="SO-1", store_key="k", transaction_date="2026-11-21", grand_total=10, status="Draft", store_payment_status="Unpaid")]),
 		"contact-us": b,
-		"news": dict(b, posts=[D(name="n1", title="T", blog_intro="i", meta_image="", published_on="2026-11-01")]),
-		"news_post": dict(b, post=D(title="T", published_on="2026-11-01", meta_image=""), body="<p>b</p>"),
+		"news": dict(b, posts=[D(name="n1", title="T", summary="i", image="", published_on="2026-11-01")]),
+		"news_post": dict(b, post=D(title="T", published_on="2026-11-01", image="", body="<p>b</p>")),
 		"page": dict(b, page_doc=D(title="About", image="", body="<p>b</p>")),
 		"cars": dict(b, cars=[car]),
 		"car": dict(b, car=car),
 		"stay": dict(b, rooms=[room]),
 	}
+
+
+EVIL = '"><script>alert(1)</script>'
+
+
+def xss(e):
+	"""Text a visitor controls (search box, names) must come out escaped on every page that prints it."""
+	b = base()
+	bad = 0
+	cases = {
+		"shop": dict(b, q=EVIL, cat="", items=[dict(ITEM, name=EVIL)], total=1, pages=1, cat_title=None, base_query="", q_url=""),
+		"product": dict(b, item=D(name="A", item_name=EVIL, image="", item_group="Cat", price=1, in_stock=True, store_summary=EVIL), related=[], group_slug="cat", detail_html=""),
+		"checkout": dict(b, methods=["Cash on Delivery"], prefill={"name": EVIL, "phone": EVIL, "email": EVIL}),
+		"order": dict(b, so=D(name="SO-1", status="Draft", per_delivered=0, docstatus=1, store_payment_method="Online Payment", store_payment_status="Pending", delivery_date="2026-11-25", grand_total=1), lines=[D(item_name=EVIL, qty=1, amount=1)], address_text=EVIL, key="k"),
+	}
+	for name, ctx in cases.items():
+		out = e.get_template(f"ledgerx_store/www/{name}.html").render(**ctx)
+		ok = "<script>alert(1)" not in out and "&lt;script&gt;" in out
+		print(("ok  " if ok else "FAIL"), "escapes", name)
+		bad += not ok
+	return bad
 
 
 def main():
@@ -63,6 +84,7 @@ def main():
 		ok = len(out) > 400 and "Demo" in out
 		print(("ok  " if ok else "FAIL"), name, len(out))
 		bad += not ok
+	bad += xss(e)
 	files = {os.path.basename(p)[:-5] for p in glob.glob(os.path.join(ROOT, "www", "*.html"))}
 	missing = files - set(contexts())
 	print("not rendered:", missing or "none")

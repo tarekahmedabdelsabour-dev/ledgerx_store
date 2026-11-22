@@ -4,7 +4,7 @@ import os
 import uuid
 
 BASE = os.path.join(os.path.dirname(__file__), "..", "ledgerx_store")
-TS = "2026-11-22 09:00:00.000000"  # raise this whenever the workspace changes: migrate only re-reads a file that is newer than the saved one
+TS = "2026-11-22 12:00:00.000000"  # raise this whenever the workspace changes: migrate only re-reads a file that is newer than the saved one
 CARDS = [
 	("Online Orders to Deliver", "Sales Order", [["Sales Order", "store_order", "=", 1], ["Sales Order", "docstatus", "=", 1], ["Sales Order", "status", "in", ["To Deliver and Bill", "To Deliver"]]], "Count", None),
 	("Online Orders Unpaid", "Sales Order", [["Sales Order", "store_order", "=", 1], ["Sales Order", "docstatus", "=", 1], ["Sales Order", "store_payment_status", "in", ["Unpaid", "Pending"]]], "Count", None),
@@ -24,10 +24,10 @@ GROUPS = [
 	("Catalog", "package", 0, [
 		("Item", "DocType", "Item", "box"), ("Item Group", "DocType", "Item Group", "layers"), ("Item Price", "DocType", "Item Price", "tag")]),
 	("Website", "globe", 0, [
-		("Store Page", "DocType", "Store Page", "file-text"), ("Blog Post", "DocType", "Blog Post", "newspaper"), ("Blog Category", "DocType", "Blog Category", "tag")]),
+		("Store Page", "DocType", "Store Page", "file-text"), ("Store Post", "DocType", "Store Post", "newspaper")]),
 	("Setup", "settings", 0, [("Store Settings", "DocType", "Store Settings", "settings")]),
 ]
-TOP = ["Store Settings", "Store Inquiry", "Store Page", "Sales Order"]
+TOP = ["Store Settings", "Store Inquiry", "Store Page", "Store Post", "Sales Order"]
 
 
 def write(path, data):

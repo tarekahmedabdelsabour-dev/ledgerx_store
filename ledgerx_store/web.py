@@ -1,6 +1,5 @@
 """Shared context for every store page."""
 import frappe
-from frappe import _
 from frappe.utils import fmt_money
 
 from ledgerx_store import data
@@ -22,7 +21,7 @@ def base(context, title=None, description=None, image=None):
 	context.menu_pages = data.menu_pages()
 	context.has_news = bool(s.show_news and data.news(1))
 	context.has_cars = bool(data.cars(1))
-	context.has_rooms = bool(data.rooms())
+	context.has_rooms = data.has_rooms()
 	context.whatsapp_link = f"https://wa.me/{''.join(ch for ch in (s.whatsapp or '') if ch.isdigit())}" if s.whatsapp else ""
 	context.money = lambda v: fmt_money(v, currency=context.currency)
 	return context

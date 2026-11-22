@@ -4,7 +4,7 @@ import os
 import re
 
 ROOT = os.path.join(os.path.dirname(__file__), "..", "ledgerx_store", "store", "doctype")
-TS = "2026-11-22 08:00:00.000000"
+TS = "2026-11-22 12:00:00.000000"
 MODULE = "Store"
 
 
@@ -96,7 +96,6 @@ DT["Store Settings"] = {"issingle": 1, "fields": [
 	sec("sb_home", "Home Page"),
 	f("hero_title", "Data", "Main Headline"),
 	f("hero_text", "Small Text", "Short Text under It"),
-	f("news_category", "Link", "News Category", options="Blog Category", description="Blank: all published news."),
 	sec("sb_contact", "Contact and Footer"),
 	f("phone", "Data", "Phone"),
 	f("whatsapp", "Data", "WhatsApp Number", description="With country code, digits only."),
@@ -125,6 +124,18 @@ DT["Store Page"] = {"fields": [
 	f("body", "Text Editor", "Content"),
 ], "autoname": "field:slug", "icon": "fa fa-file-text-o", "title_field": "title", "perms": perms((MGR, "all"))}
 
+DT["Store Post"] = {"fields": [
+	f("title", "Data", "Title", reqd=1, in_list_view=1),
+	f("slug", "Data", "Address Part", reqd=1, unique=1, in_list_view=1, description="The post opens at /news/<this>."),
+	f("published", "Check", "Published", default=1, in_list_view=1),
+	f("published_on", "Date", "Published On", default="Today", in_list_view=1),
+	col("cb1"),
+	f("image", "Attach Image", "Top Image"),
+	f("summary", "Small Text", "Summary"),
+	sec("sb_body", "Content"),
+	f("body", "Text Editor", "Content"),
+], "autoname": "field:slug", "icon": "fa fa-newspaper-o", "title_field": "title", "perms": perms((MGR, "all"))}
+
 DT["Store Inquiry"] = {"fields": [
 	f("kind", "Select", "Kind", options=KINDS, reqd=1, in_list_view=1, in_standard_filter=1),
 	f("status", "Select", "Status", options="New\nContacted\nClosed", default="New", in_list_view=1, in_standard_filter=1),
@@ -132,7 +143,8 @@ DT["Store Inquiry"] = {"fields": [
 	f("phone", "Data", "Phone", in_list_view=1),
 	col("cb1"),
 	f("email", "Data", "Email"),
-	f("lead", "Link", "Lead", options="Lead", read_only=1),
+	f("lead_doctype", "Link", "Lead Type", options="DocType", read_only=1, hidden=1),
+	f("lead", "Dynamic Link", "Lead", options="lead_doctype", read_only=1),
 	f("ref_doctype", "Data", "About (Type)", read_only=1),
 	f("ref_name", "Data", "About", read_only=1),
 	sec("sb_d", "Details"),

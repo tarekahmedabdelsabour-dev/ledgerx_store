@@ -3,7 +3,7 @@
 	const T = (k, ...a) => { let s = (window.LX_I18N && window.LX_I18N[k]) || k; a.forEach((v, i) => (s = s.replace("{" + i + "}", v))); return s; };
 	const root = () => document.getElementById("lx-main");
 	const cur = () => (root() && root().dataset.currency) || "EGP";
-	const loc = () => ((root() && root().dataset.lang) || "ar") === "ar" ? "ar-EG" : (root().dataset.lang || "en");
+	const loc = () => ((root() && root().dataset.lang) || "ar") === "ar" ? "ar-EG-u-nu-latn" : (root().dataset.lang || "en");
 	const money = (v) => { try { return new Intl.NumberFormat(loc(), { style: "currency", currency: cur() }).format(v); } catch (e) { return Number(v).toFixed(2) + " " + cur(); } };
 	const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
@@ -22,14 +22,11 @@
 		t.className = "lx-toast"; t.setAttribute("role", "status"); t.textContent = msg;
 		document.body.appendChild(t); setTimeout(() => t.remove(), 2600);
 	}
-	function call(method, args, ok, bad) {
-		frappe.call({ method: "ledgerx_store.api." + method, type: "POST", args, callback: (r) => ok && ok(r.message), error: () => bad && bad() });
-	}
 	function errText(xhr) {
 		try { const m = JSON.parse(JSON.parse(xhr.responseText)._server_messages)[0]; return JSON.parse(m).message.replace(/<[^>]+>/g, ""); } catch (e) { return T("Something went wrong. Try again."); }
 	}
 	function api(method, args) {
-		return new Promise((res, rej) => frappe.call({ method: "ledgerx_store.api." + method, type: "POST", args, callback: (r) => res(r.message), error: (x) => rej(x) }));
+		return new Promise((res, rej) => frappe.call({ method: "ledgerx_store.api." + method, type: "POST", args, silent: true, callback: (r) => res(r.message), error: (x) => rej(x) }));
 	}
 
 	// add to cart
@@ -56,7 +53,7 @@
 			return "";
 		}).filter(Boolean).map((t) => '<div class="lx-alert warn">' + t + "</div>").join("");
 		if (!q.lines.length) { box.innerHTML = notes + '<div class="lx-empty">' + esc(T("Your cart is empty")) + '<p><a class="lx-btn" href="/shop">' + esc(T("Continue shopping")) + "</a></p></div>"; return; }
-		const rows = q.lines.map((l) => '<div class="lx-line"><' + (l.image ? 'img src="' + esc(l.image) + '" alt=""' : "i") + '><div><b>' + esc(l.name) + '</b><div class="lx-muted">' + money(l.price) + '</div><button class="rm" data-rm="' + esc(l.item) + '">' + esc(T("Remove")) + '</button></div><div class="end"><div class="lx-qty"><button type="button" data-d="' + esc(l.item) + '" data-s="-">−</button><input aria-label="qty" value="' + l.qty + '" data-q="' + esc(l.item) + '" inputmode="numeric"><button type="button" data-d="' + esc(l.item) + '" data-s="+">+</button></div><div><b>' + money(l.amount) + "</b></div></div></div>").join("");
+		const rows = q.lines.map((l) => '<div class="lx-line"><' + (l.image ? 'img src="' + esc(l.image) + '" alt=""' : "i></i") + '><div><b>' + esc(l.name) + '</b><div class="lx-muted">' + money(l.price) + '</div><button class="rm" data-rm="' + esc(l.item) + '">' + esc(T("Remove")) + '</button></div><div class="end"><div class="lx-qty"><button type="button" data-d="' + esc(l.item) + '" data-s="-">−</button><input aria-label="qty" value="' + l.qty + '" data-q="' + esc(l.item) + '" inputmode="numeric"><button type="button" data-d="' + esc(l.item) + '" data-s="+">+</button></div><div><b>' + money(l.amount) + "</b></div></div></div>").join("");
 		box.innerHTML = notes + '<div class="lx-panel">' + rows + "</div>";
 		box.querySelectorAll("[data-rm]").forEach((b) => b.addEventListener("click", () => { const c = store.get(); delete c[b.dataset.rm]; store.set(c); onChange(); }));
 		box.querySelectorAll("[data-d]").forEach((b) => b.addEventListener("click", () => { const c = store.get(); c[b.dataset.d] = Math.max(1, (+c[b.dataset.d] || 1) + (b.dataset.s === "+" ? 1 : -1)); store.set(c); onChange(); }));
@@ -125,7 +122,16 @@
 		}));
 	}
 
-	function init() { badge(); bindAdd(); cartPage(); checkoutPage(); inquiryForms(); }
+	// pay again for an order whose card payment did not finish
+	function payButtons() {
+		document.querySelectorAll("[data-pay]").forEach((b) => b.addEventListener("click", () => {
+			b.disabled = true;
+			api("pay_order", { order: b.dataset.pay, key: b.dataset.key }).then((r) => { location.href = r.pay_url; })
+				.catch((x) => { const e = document.querySelector("[data-pay-err]"); if (e) { e.textContent = errText(x); e.hidden = false; } b.disabled = false; });
+		}));
+	}
+
+	function init() { badge(); bindAdd(); cartPage(); checkoutPage(); inquiryForms(); payButtons(); }
 	window.addEventListener("load", () => { if (window.frappe && frappe.call) init(); else { badge(); bindAdd(); } });
 	window.LX = { store, money };
 })();

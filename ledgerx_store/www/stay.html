@@ -1,5 +1,6 @@
 {% extends "ledgerx_store/templates/store_base.html" %}
 {% block page_content %}
+{% autoescape true %}
 <div class="lx-wrap" style="padding-block:28px">
   <h1 style="margin-block-end:6px">{{ _("Rooms") }}</h1>
   <p class="lx-muted">{{ _("Send a request and we confirm availability and the final price.") }}</p>
@@ -27,4 +28,5 @@
   </section>
   {% endfor %}
 </div>
+{% endautoescape %}
 {% endblock %}

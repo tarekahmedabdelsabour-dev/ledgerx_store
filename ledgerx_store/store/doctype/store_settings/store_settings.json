@@ -1,6 +1,6 @@
 {
  "actions": [],
- "creation": "2026-11-22 08:00:00.000000",
+ "creation": "2026-11-22 12:00:00.000000",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -46,7 +46,6 @@
   "sb_home",
   "hero_title",
   "hero_text",
-  "news_category",
   "sb_contact",
   "phone",
   "whatsapp",
@@ -306,13 +305,6 @@
    "label": "Short Text under It"
   },
   {
-   "fieldname": "news_category",
-   "fieldtype": "Link",
-   "label": "News Category",
-   "options": "Blog Category",
-   "description": "Blank: all published news."
-  },
-  {
    "fieldname": "sb_contact",
    "fieldtype": "Section Break",
    "label": "Contact and Footer"
@@ -382,7 +374,7 @@
   }
  ],
  "links": [],
- "modified": "2026-11-22 08:00:00.000000",
+ "modified": "2026-11-22 12:00:00.000000",
  "modified_by": "Administrator",
  "module": "Store",
  "name": "Store Settings",

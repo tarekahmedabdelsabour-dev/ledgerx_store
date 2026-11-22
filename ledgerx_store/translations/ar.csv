@@ -11,14 +11,12 @@ Adults,بالغين
 All news,كل الأخبار
 All products,كل المنتجات
 Amount,المبلغ
+Another category already uses the address part {0}.,قسم آخر يستخدم نفس جزء العنوان {0}.
 Another product already uses the address part {0}.,منتج آخر يستخدم نفس جزء العنوان {0}.
 Ask for the price,اسأل عن السعر
 Bank Transfer,تحويل بنكي
 Bank Transfer or Wallet,تحويل بنكي أو محفظة
 Beds,الأسرّة
-Blank: all published news.,فاضي: كل الأخبار المنشورة.
-Blog Category,تصنيف المدونة
-Blog Post,مقال
 Book a test drive,احجز تجربة قيادة
 Car Interest,اهتمام بسيارة
 Cars,السيارات
@@ -83,6 +81,7 @@ Kind,النوع
 Label,العنوان
 Landmark or floor (optional),علامة مميزة أو الدور (اختياري)
 Lead,عميل محتمل
+Lead Type,نوع العميل المحتمل
 Logo,الشعار
 Main,الرئيسية
 Main Color,اللون الأساسي
@@ -101,7 +100,6 @@ New Requests,طلبات جديدة
 New online order {0} from {1}: {2},طلب أونلاين جديد {0} من {1}: {2}
 Newest,الأحدث
 News,الأخبار
-News Category,تصنيف الأخبار
 No longer available,لم يعد متاحاً
 No news yet.,لا توجد أخبار بعد.
 No payment method is available right now. Contact us.,لا توجد طريقة دفع متاحة حالياً. تواصل معنا.
@@ -148,6 +146,7 @@ Product,المنتج
 Products in the Store,منتجات في المتجر
 Products per Page,عدد المنتجات في الصفحة
 Published,منشور
+Published On,تاريخ النشر
 Qty,الكمية
 Quantity,الكمية
 Reach us,طرق التواصل
@@ -175,6 +174,7 @@ Send message,إرسال الرسالة
 Send request,إرسال الطلب
 Sent. We will contact you soon.,تم الإرسال. هنتواصل معاك قريباً.
 Service,خدمة
+Set a default bank or cash account on the company before recording payments.,حدّد حساب بنك أو خزينة افتراضي للشركة قبل تسجيل المدفوعات.
 "Set the shipping income account, or make the shipping fee zero.",حدد حساب إيراد الشحن، أو خلّي رسوم الشحن صفر.
 Setup,الإعداد
 Shipping,الشحن
@@ -202,6 +202,7 @@ Store Manager,مدير المتجر
 Store Name,اسم المتجر
 Store Page,صفحة المتجر
 Store Pages,صفحات المتجر
+Store Post,خبر المتجر
 Store Settings,إعدادات المتجر
 Store Warehouse,مخزن المتجر
 Submit Orders Automatically,اعتماد الطلبات تلقائياً
@@ -219,10 +220,12 @@ The email address is not valid.,البريد الإلكتروني غير صحي�
 The page opens at /p/<this>.,الصفحة بتفتح على /p/<هذا الجزء>.
 The payment arrived,الدفع وصل
 The payment gateway did not accept the request ({0}).,بوابة الدفع لم تقبل الطلب ({0}).
+The post opens at /news/<this>.,الخبر يفتح على /news/<هذا الجزء>.
 The quantity was reduced to {0},تم تقليل الكمية إلى {0}
 The store is closed right now.,المتجر مغلق حالياً.
 The store is not ready to take orders yet.,المتجر لسه مش جاهز لاستقبال الطلبات.
 The store is not ready to take orders: set the shipping account.,المتجر غير جاهز لاستقبال الطلبات: حدد حساب الشحن.
+This order cannot be paid online.,لا يمكن دفع هذا الطلب أونلاين.
 This payment method is not available.,طريقة الدفع هذه غير متاحة.
 This product is out of stock right now. Contact us to ask when it returns.,هذا المنتج غير متاح حالياً. تواصل معنا لتعرف متى يرجع.
 Title,العنوان

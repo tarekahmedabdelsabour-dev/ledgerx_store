@@ -1,5 +1,6 @@
 {% extends "ledgerx_store/templates/store_base.html" %}
 {% block page_content %}
+{% autoescape true %}
 <div class="lx-wrap">
 <div class="lx-prod">
   <div class="pic">{% if car.image %}<img src="{{ car.image }}" alt="{{ car.make }} {{ car.model }}">{% endif %}</div>
@@ -29,4 +30,5 @@
 </div>
 {% if car.notes %}<div class="lx-detail">{{ car.notes }}</div>{% endif %}
 </div>
+{% endautoescape %}
 {% endblock %}

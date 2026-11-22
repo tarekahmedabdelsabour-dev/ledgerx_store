@@ -1,5 +1,4 @@
 import frappe
-from frappe import _
 
 from ledgerx_store import data, web
 

@@ -1,6 +1,7 @@
 {% extends "ledgerx_store/templates/store_base.html" %}
 {% from "ledgerx_store/templates/includes/card.html" import card with context %}
 {% block page_content %}
+{% autoescape true %}
 <div class="lx-wrap">
 <div class="lx-prod">
   <div class="pic">{% if item.image %}<img src="{{ item.image }}" alt="{{ item.item_name }}">{% endif %}</div>
@@ -24,4 +25,5 @@
 {% if detail_html %}<div class="lx-detail">{{ detail_html | safe }}</div>{% endif %}
 {% if related %}<section class="lx-section"><div class="lx-section-head"><h2>{{ _("You may also like") }}</h2></div><div class="lx-grid">{% for it in related %}{{ card(it) }}{% endfor %}</div></section>{% endif %}
 </div>
+{% endautoescape %}
 {% endblock %}

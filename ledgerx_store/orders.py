@@ -3,6 +3,7 @@ import secrets
 
 import frappe
 from frappe import _
+from frappe.model import child_table_fields, default_fields
 from frappe.utils import add_days, flt, nowdate
 
 from ledgerx_store import data
@@ -25,11 +26,11 @@ def _customer_for(info, user):
 			return c
 	email, phone = (info.get("email") or "").strip().lower(), (info.get("phone") or "").strip()
 	if email:
-		c = frappe.db.sql("select dl.link_name from `tabContact Email` ce join `tabDynamic Link` dl on dl.parent = ce.parent and dl.link_doctype = 'Customer' where lower(ce.email_id) = %s limit 1", email)
+		c = frappe.db.sql("select dl.link_name from `tabContact Email` ce join `tabDynamic Link` dl on dl.parent = ce.parent and dl.parenttype = 'Contact' and dl.link_doctype = 'Customer' where lower(ce.email_id) = %s limit 1", email)
 		if c:
 			return c[0][0]
 	if phone:
-		c = frappe.db.sql("select dl.link_name from `tabContact Phone` cp join `tabDynamic Link` dl on dl.parent = cp.parent and dl.link_doctype = 'Customer' where cp.phone = %s limit 1", phone)
+		c = frappe.db.sql("select dl.link_name from `tabContact Phone` cp join `tabDynamic Link` dl on dl.parent = cp.parent and dl.parenttype = 'Contact' and dl.link_doctype = 'Customer' where cp.phone = %s limit 1", phone)
 		if c:
 			return c[0][0]
 	cust = frappe.get_doc({"doctype": "Customer", "customer_name": info["name"][:140], "customer_type": "Individual", "customer_group": s.customer_group or frappe.db.get_single_value("Selling Settings", "customer_group") or "Individual",
@@ -44,17 +45,21 @@ def _customer_for(info, user):
 
 
 def _customer_of_user(user):
-	r = frappe.db.sql("select dl.link_name from `tabContact` c join `tabDynamic Link` dl on dl.parent = c.name and dl.link_doctype = 'Customer' where c.user = %s limit 1", user)
-	return r[0][0] if r else None
+	found = customers_of_user(user)
+	return found[0] if found else None
 
 
 def customers_of_user(user):
-	return [r[0] for r in frappe.db.sql("select dl.link_name from `tabContact` c join `tabDynamic Link` dl on dl.parent = c.name and dl.link_doctype = 'Customer' where c.user = %s", user)]
+	return [r[0] for r in frappe.db.sql("select dl.link_name from `tabContact` c join `tabDynamic Link` dl on dl.parent = c.name and dl.parenttype = 'Contact' and dl.link_doctype = 'Customer' where c.user = %s", user)]
 
 
 def _address_for(customer, a, phone):
 	if not (a.get("line1") and a.get("city")):
 		return None
+	same = frappe.db.sql("""select a.name from `tabAddress` a join `tabDynamic Link` dl on dl.parent = a.name and dl.parenttype = 'Address' and dl.link_doctype = 'Customer' and dl.link_name = %s
+		where a.address_line1 = %s and a.city = %s and ifnull(a.disabled, 0) = 0 limit 1""", (customer, a["line1"][:140], a["city"][:140]))
+	if same:
+		return same[0][0]
 	addr = frappe.get_doc({"doctype": "Address", "address_title": customer, "address_type": "Shipping", "address_line1": a["line1"][:140], "address_line2": (a.get("line2") or "")[:140],
 		"city": a["city"][:140], "state": (a.get("state") or "")[:140], "country": a.get("country") or frappe.db.get_single_value("System Settings", "country") or "Egypt",
 		"phone": phone, "links": [{"link_doctype": "Customer", "link_name": customer}]})
@@ -98,7 +103,10 @@ def place(lines, info, address, payment, pickup=False, user=None):
 		item = frappe.db.get_value("Item", ln["item"], ["item_name", "stock_uom"], as_dict=True)
 		so.append("items", {"item_code": ln["item"], "qty": ln["qty"], "uom": item.stock_uom, "rate": ln["price"], "price_list_rate": ln["price"], "delivery_date": so.delivery_date, "warehouse": (data.warehouses() or [None])[0]})
 	if s.sales_taxes_template:
+		# Added here, not left to the order's own validation: that step skips the template once any tax row (the shipping row below) exists.
 		so.taxes_and_charges = s.sales_taxes_template
+		for row in _template_taxes(s.sales_taxes_template):
+			so.append("taxes", row)
 	so.run_method("set_missing_values")
 	if q["shipping"]:
 		so.append("taxes", {"charge_type": "Actual", "account_head": s.shipping_account, "description": "Shipping", "tax_amount": q["shipping"]})
@@ -109,6 +117,16 @@ def place(lines, info, address, payment, pickup=False, user=None):
 		so.submit()
 	_tell_staff(so)
 	return so
+
+
+def _template_taxes(template):
+	rows = []
+	for t in frappe.get_cached_doc("Sales Taxes and Charges Template", template).get("taxes"):
+		d = t.as_dict()
+		for k in default_fields + child_table_fields:
+			d.pop(k, None)
+		rows.append(d)
+	return rows
 
 
 def _tell_staff(so):
@@ -133,7 +151,13 @@ def can_view(so_name, key=None, user=None):
 
 
 def record_payment(so_name, mode_of_payment, reference=None, amount=None):
-	"""Payment Entry against the order, then marks it paid. Safe to call twice."""
+	"""Payment Entry against the order, then marks it paid. Safe to call twice.
+	Runs as Administrator: the gateway callback has no login, and the accounting helpers check the caller's rights."""
+	with data.as_admin():
+		return _record_payment(so_name, mode_of_payment, reference, amount)
+
+
+def _record_payment(so_name, mode_of_payment, reference, amount):
 	from erpnext.accounts.doctype.payment_entry.payment_entry import get_payment_entry
 
 	so = frappe.get_doc("Sales Order", so_name)
@@ -141,8 +165,15 @@ def record_payment(so_name, mode_of_payment, reference=None, amount=None):
 		frappe.throw(_("Submit the order first."))
 	if so.store_payment_status == "Paid":
 		return None
-	pe = get_payment_entry("Sales Order", so.name, party_amount=flt(amount) or None)
+	try:
+		pe = get_payment_entry("Sales Order", so.name, party_amount=flt(amount) or None)
+	except AttributeError:
+		frappe.throw(_("Set a default bank or cash account on the company before recording payments."))
 	pe.mode_of_payment = mode_of_payment
+	account = frappe.db.get_value("Mode of Payment Account", {"parent": mode_of_payment, "company": so.company}, "default_account")
+	if account and account != pe.paid_to and frappe.db.get_value("Account", account, "account_currency") == pe.paid_to_account_currency:
+		pe.paid_to = account
+		pe.paid_to_account_type = frappe.db.get_value("Account", account, "account_type")
 	pe.reference_no = reference or so.name
 	pe.reference_date = nowdate()
 	pe.flags.ignore_permissions = True

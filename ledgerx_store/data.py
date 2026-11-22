@@ -1,10 +1,23 @@
 """Reads the database for the store: settings, catalog, stock, prices, categories."""
+from contextlib import contextmanager
+
 import frappe
 from frappe.utils import flt, nowdate
 
 from ledgerx_store.engine import cart
 
 CACHE_SECS = 60
+
+
+@contextmanager
+def as_admin():
+	"""Some stock and payment helpers check the caller's rights. A visitor has none, so reads they trigger run as Administrator."""
+	prev = frappe.session.user
+	frappe.set_user("Administrator")
+	try:
+		yield
+	finally:
+		frappe.set_user(prev)
 
 
 def settings():
@@ -19,8 +32,7 @@ def tax_rate():
 	t = settings().sales_taxes_template
 	if not t:
 		return 0.0
-	rows = frappe.get_all("Sales Taxes and Charges", filters={"parent": t, "charge_type": "On Net Total"}, fields=["rate"])
-	return sum(flt(r.rate) for r in rows)
+	return sum(flt(r.rate) for r in frappe.get_cached_doc("Sales Taxes and Charges Template", t).taxes if r.charge_type == "On Net Total")
 
 
 def _has_doctype(name):
@@ -72,7 +84,9 @@ def _fresh_batch_qty(item, whs):
 
 		today, total = nowdate(), 0.0
 		for wh in whs:
-			for b in get_batch_qty(item_code=item, warehouse=wh) or []:
+			with as_admin():
+				batches = get_batch_qty(item_code=item, warehouse=wh) or []
+			for b in batches:
 				exp = frappe.db.get_value("Batch", b.get("batch_no"), "expiry_date")
 				if not exp or str(exp) >= today:
 					total += flt(b.get("qty"))
@@ -176,23 +190,27 @@ def menu_pages():
 
 
 def news(limit=6):
-	if not _has_doctype("Blog Post"):
-		return []
-	f = {"published": 1}
-	cat = settings().news_category
-	if cat:
-		f["blog_category"] = cat
-	return frappe.get_all("Blog Post", filters=f, fields=["name", "title", "blog_intro", "meta_image", "published_on"], order_by="published_on desc", limit_page_length=limit)
+	return frappe.get_all("Store Post", filters={"published": 1, "published_on": ["<=", nowdate()]}, fields=["name", "title", "summary", "image", "published_on"],
+		order_by="published_on desc, creation desc", limit_page_length=limit)
+
+
+def _has_field(doctype, fieldname):
+	"""The store fields on Car and Room Type are added on migrate; until then those lists stay empty instead of failing."""
+	return _has_doctype(doctype) and frappe.get_meta(doctype).has_field(fieldname)
 
 
 def cars(limit=60):
-	if not _has_doctype("Car") or not settings().show_cars:
+	if not settings().show_cars or not _has_field("Car", "store_publish"):
 		return []
 	return frappe.get_all("Car", filters={"store_publish": 1, "status": "Ready for Sale"}, fields=["name", "make", "model", "year", "mileage", "color", "fuel", "transmission", "condition", "asking_price", "image"], order_by="modified desc", limit_page_length=limit)
 
 
+def has_rooms():
+	return bool(settings().show_hotels and _has_field("Room Type", "store_publish") and frappe.db.exists("Room Type", {"store_publish": 1}))
+
+
 def rooms():
-	if not _has_doctype("Room Type") or not settings().show_hotels:
+	if not settings().show_hotels or not _has_field("Room Type", "store_publish"):
 		return []
 	out = []
 	for rt in frappe.get_all("Room Type", filters={"store_publish": 1}, fields=["name", "room_type_name", "hotel", "max_adults", "max_children", "beds", "description"]):

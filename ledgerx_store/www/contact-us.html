@@ -1,5 +1,6 @@
 {% extends "ledgerx_store/templates/store_base.html" %}
 {% block page_content %}
+{% autoescape true %}
 <div class="lx-wrap lx-contact">
   <form data-inquiry="Contact" class="lx-panel" novalidate>
     <h1 style="font-size:1.6rem;margin-block-end:12px">{{ _("Contact us") }}</h1>
@@ -21,4 +22,5 @@
     {% if store.working_hours %}<p><b>{{ _("Working hours") }}</b><br>{{ store.working_hours }}</p>{% endif %}
   </aside>
 </div>
+{% endautoescape %}
 {% endblock %}

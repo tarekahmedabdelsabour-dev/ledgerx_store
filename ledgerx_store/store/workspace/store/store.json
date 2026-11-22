@@ -9,8 +9,8 @@
    "label": "Online Orders by Payment"
   }
  ],
- "content": "[{\"id\": \"dc0064095a\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Store</b></span>\", \"col\": 12}}, {\"id\": \"9a58912eeb\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Store Settings\", \"col\": 3}}, {\"id\": \"aea3299ede\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Store Inquiry\", \"col\": 3}}, {\"id\": \"5e1f8ba9f3\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Store Page\", \"col\": 3}}, {\"id\": \"6685a2467b\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Sales Order\", \"col\": 3}}, {\"id\": \"52ac78d254\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Online Orders to Deliver\", \"col\": 3}}, {\"id\": \"a3461bc649\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Online Orders Unpaid\", \"col\": 3}}, {\"id\": \"cc8ea633c3\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Online Payments Failed\", \"col\": 3}}, {\"id\": \"5e21d1b382\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"New Requests\", \"col\": 3}}, {\"id\": \"42531132d2\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Products in the Store\", \"col\": 3}}, {\"id\": \"9253b1df46\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Requests by Kind\", \"col\": 6}}, {\"id\": \"04fde80c7c\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Online Orders by Payment\", \"col\": 6}}, {\"id\": \"6318740d9c\", \"type\": \"card\", \"data\": {\"card_name\": \"Orders\", \"col\": 4}}, {\"id\": \"35419bb95e\", \"type\": \"card\", \"data\": {\"card_name\": \"Requests\", \"col\": 4}}, {\"id\": \"15c77d0821\", \"type\": \"card\", \"data\": {\"card_name\": \"Catalog\", \"col\": 4}}, {\"id\": \"f85524cd86\", \"type\": \"card\", \"data\": {\"card_name\": \"Website\", \"col\": 4}}, {\"id\": \"2601336f63\", \"type\": \"card\", \"data\": {\"card_name\": \"Setup\", \"col\": 4}}]",
- "creation": "2026-11-22 09:00:00.000000",
+ "content": "[{\"id\": \"f342564e6f\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Store</b></span>\", \"col\": 12}}, {\"id\": \"01a6fb5e85\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Store Settings\", \"col\": 3}}, {\"id\": \"5a758f8087\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Store Inquiry\", \"col\": 3}}, {\"id\": \"16525cf9e1\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Store Page\", \"col\": 3}}, {\"id\": \"9bb3d383a7\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Store Post\", \"col\": 3}}, {\"id\": \"15e8383760\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Sales Order\", \"col\": 3}}, {\"id\": \"281fc2ce81\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Online Orders to Deliver\", \"col\": 3}}, {\"id\": \"088b256c58\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Online Orders Unpaid\", \"col\": 3}}, {\"id\": \"07a8c083aa\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Online Payments Failed\", \"col\": 3}}, {\"id\": \"999b86ad6e\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"New Requests\", \"col\": 3}}, {\"id\": \"51af0383b9\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Products in the Store\", \"col\": 3}}, {\"id\": \"4709a45c12\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Requests by Kind\", \"col\": 6}}, {\"id\": \"076261c994\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Online Orders by Payment\", \"col\": 6}}, {\"id\": \"bd0b992645\", \"type\": \"card\", \"data\": {\"card_name\": \"Orders\", \"col\": 4}}, {\"id\": \"a7305418a6\", \"type\": \"card\", \"data\": {\"card_name\": \"Requests\", \"col\": 4}}, {\"id\": \"19b286dec2\", \"type\": \"card\", \"data\": {\"card_name\": \"Catalog\", \"col\": 4}}, {\"id\": \"f3191a375d\", \"type\": \"card\", \"data\": {\"card_name\": \"Website\", \"col\": 4}}, {\"id\": \"477208880b\", \"type\": \"card\", \"data\": {\"card_name\": \"Setup\", \"col\": 4}}]",
+ "creation": "2026-11-22 12:00:00.000000",
  "custom_blocks": [],
  "docstatus": 0,
  "doctype": "Workspace",
@@ -149,7 +149,7 @@
    "label": "Website",
    "hidden": 0,
    "is_query_report": 0,
-   "link_count": 3,
+   "link_count": 2,
    "onboard": 0
   },
   {
@@ -165,20 +165,9 @@
   },
   {
    "type": "Link",
-   "label": "Blog Post",
+   "label": "Store Post",
    "link_type": "DocType",
-   "link_to": "Blog Post",
-   "hidden": 0,
-   "is_query_report": 0,
-   "onboard": 0,
-   "dependencies": "",
-   "only_for": ""
-  },
-  {
-   "type": "Link",
-   "label": "Blog Category",
-   "link_type": "DocType",
-   "link_to": "Blog Category",
+   "link_to": "Store Post",
    "hidden": 0,
    "is_query_report": 0,
    "onboard": 0,
@@ -206,7 +195,7 @@
   }
  ],
  "title": "Store",
- "modified": "2026-11-22 09:00:00.000000",
+ "modified": "2026-11-22 12:00:00.000000",
  "modified_by": "Administrator",
  "module": "Store",
  "name": "Store",
@@ -254,6 +243,12 @@
   {
    "label": "Store Page",
    "link_to": "Store Page",
+   "type": "DocType",
+   "doc_view": "List"
+  },
+  {
+   "label": "Store Post",
+   "link_to": "Store Post",
    "type": "DocType",
    "doc_view": "List"
   },

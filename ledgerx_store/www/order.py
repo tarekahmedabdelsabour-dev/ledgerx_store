@@ -12,6 +12,7 @@ def get_context(context):
 	so = frappe.db.get_value("Sales Order", name, ["name", "transaction_date", "delivery_date", "status", "grand_total", "total_taxes_and_charges", "net_total", "per_delivered", "per_billed", "docstatus",
 		"store_payment_method", "store_payment_status", "customer_name", "store_phone", "currency", "shipping_address"], as_dict=True)
 	context.so = so
+	context.key = key if key else ""
 	context.lines = frappe.get_all("Sales Order Item", filters={"parent": name}, fields=["item_name", "qty", "rate", "amount", "image"], order_by="idx")
 	context.address_text = frappe.utils.strip_html(so.shipping_address or "")
 	context.currency = so.currency
