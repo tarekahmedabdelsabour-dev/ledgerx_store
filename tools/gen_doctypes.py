@@ -169,7 +169,7 @@ def build():
 		for k in ("autoname", "icon", "title_field", "issingle", "istable"):
 			if d.get(k):
 				out[k] = d[k]
-		if not d.get("istable") and not d.get("issingle"):
+		if not d.get("istable"):
 			out["track_changes"] = 1
 		slug = re.sub(r"[^a-z0-9]+", "_", name.lower()).strip("_")
 		folder = os.path.join(ROOT, slug)
